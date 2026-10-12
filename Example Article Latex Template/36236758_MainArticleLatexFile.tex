@@ -1,0 +1,58 @@
+\documentclass[a4paper,10pt]{IEEEtran}
+\newcommand{\DocTitleText}{Chase Combining Hybrid \myARQ{} Type \myII{} Cross-Layer Optimization for Underlay Cognitive Radio}
+\newcommand{\DocAuthorBlock}{\IEEEauthorblockA{Vaddadi V.~K.~Praneeth, Nour Mansour and Dirk Dahlhaus}}
+\newcommand{\DocAffiliation}{\IEEEauthorblockN{Communications Laboratory, University of Kassel}}
+\newcommand{\DocEmails}{ Web: www.uni-kassel.de; Email:\{praneeth,mansour,dahlhaus\}@uni-kassel.de}
+
+
+\usepackage{silence}
+\WarningFilter{latex}{Command \showhyphens has changed}
+\WarningFilter{caption}{Unknown document class}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{balance}
+\usepackage{float}  
+\usepackage[hidelinks]{hyperref}
+\let\labelindent\relax
+\usepackage{mathtools,bm}
+\usepackage{array,multirow,booktabs}
+\usepackage{lipsum}
+\usepackage{hyphenat}
+\usepackage{caption}
+\usepackage{microtype}
+\usepackage{psfrag}
+\usepackage{enumitem}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+
+\input{My DEF}
+
+\microtypesetup{stretch=20,shrink=20}
+\color{black!80}
+\makeatletter
+\def\tablename{Table}
+\makeatother
+\setlength{\columnsep}{16pt}    
+
+\begin{document}
+
+\title{\DocTitleText}
+\author{\DocAuthorBlock\\\DocAffiliation\\\DocEmails}
+
+\maketitle
+\pagestyle{empty}
+\thispagestyle{empty}
+
+\input{Abstract}
+\input{Introduction}
+\input{System_Description}
+\input{CROSS_LAYER_OPTIMIZATION}
+\input{Performance_Analysis}
+\input{CONCLUSIONS}
+
+\bibliographystyle{IEEEtran}
+\bibliography{References}
+\end{document}
+

@@ -1,0 +1,445 @@
+\section{\hspace{-0.5em}SU Cross-Layer Optimization for Coded Transmission}
+\label{sec:3}
+
+Here, we present a \myCLO{} approach for the \mySU{} \myLDPC{} coded transmission equipped with \myJBPL{} and \myCA{}. The optimization is considered using \myCC{} subject to \myQoS{} constraints in the presence of a PU transmission, thermal noise, and \myTPI{}. In Sect.~\ref{sec:3A}, we derive an upper bound for the coded \mySU{} bit-error probability (\myBEP{}). This bound is used to define the \mySU{} packet-error probability (\myPEP{}). In Sect.~\ref{sec:3c}, we employ a \myTHARQ{} to maximize a lower bound on the \mySU{} \mySE{}. Subsequently, the time-slot index $\ell$ is dropped as the channel is considered time-invariant.
+
+\subsection{Physical Layer Parameters}
+\label{sec:3A}
+
+In~(\ref{eq:1}), we define the random signal-to-noise-plus-interference ratio (\mySINR{}) of the $\myk$th subcarrier of the \mySU{} received signal at the output of the combiner after $\myJ=\myj$ transmissions as
+\begin{equation}
+\label{eq:2}
+\myA^{(\myj)}_{\mySrm,\myk} =
+\myp_\myk \, |\myD_\myk|^2 \;
+\frac{
+    \Bigl[ \sum_{{\myj}'=1}^{\myj} |\myHtilde_{\mySrm\mySrm,\myk,{\myj}'}|^2 \Bigr]^2
+}{
+    \sum_{{\myj}'=1}^{\myj} |\myHtilde_{\mySrm\mySrm,\myk,{\myj}'}|^2 
+    \Bigl( 1 + \myp_{\myPrm} \, |\myHtilde_{\myPrm\mySrm,\myk,{\myj}'}|^2 \Bigr)
+}
+\end{equation}
+
+Here, $\myp_{\myPrm}$ is the average \myPU{} transmit power per subcarrier and $|\myD_\myk|$ is the magnitude of the \myQAM{} symbol. Also, $\myHtilde_{\mySrm\mySrm,\myk,\myj}$ and $\myHtilde_{\myPrm\mySrm,\myk,\myj}$ represent the normalized \myTF{} channel coefficients between the \mySU{} \myTX{} and \mySU{} \myRX{}, and between the \myPU{} \myTX{} and \mySU{} \myRX{}, respectively, for the $\myk$th subcarrier, where
+
+\begin{align}
+\tilde{H}_{\mySrm\mySrm,\myk,\myj} &\coloneqq \frac{H_{\mySrm\mySrm,\myk,\myj}}{\sigma_{\mySrm,\myk}}, 
+& \text{where} \;\; \tilde{H}_{\mySrm\mySrm,\myk,\myj} \sim \mathcal{CN}(0,1), \\[0.3em]
+\tilde{H}_{\myPrm\mySrm,\myk,\myj} &\coloneqq \frac{H_{\myPrm\mySrm,\myk,\myj}}{\sigma_{\mySrm,\myk}}, 
+& \text{where} \;\; \tilde{H}_{\myPrm\mySrm,\myk,\myj} \sim \mathcal{CN}(0,1).
+\end{align}
+
+with $\myCcal\myNcal(\mu;\sigma^{2})$ representing a circularly-symmetric complex Gaussian random variable with mean $\mu$ and variance $\sigma^{2}$. 
+It is noted that $\bigl|\myHtilde_{\mySrm\mySrm,\myk,\myj}\bigr|^{2}$ and $\bigl|\myHtilde_{\myPrm\mySrm,\myk,\myj}\bigr|^{2}$ follow central chi-square distributions as normalized channel gains, respectively:
+
+\begin{align}
+\mathrm{Var}\bigl[\tilde{H}_{\mySrm\mySrm,\myk,\myj}\bigr] 
+&= \mathbb{E}\Bigl[ \bigl|\tilde{H}_{\mySrm\mySrm,\myk,\myj}\bigr|^2 \Bigr] 
+= \frac{\sigma^2_{\mySrm\mySrm}}{\sigma^2_{\mySrm,\myk}}, \\[0.3em]
+\mathrm{Var}\bigl[\tilde{H}_{\myPrm\mySrm,\myk,\myj}\bigr] 
+&= \mathbb{E}\Bigl[ \bigl|\tilde{H}_{\myPrm\mySrm,\myk,\myj}\bigr|^2 \Bigr] 
+= \frac{\sigma^2_{\myPrm\mySrm}}{\sigma^2_{\mySrm,\myk}}.
+\end{align}
+
+
+Here, $\sigma^{2}_{\mySrm,\myk} = \sigma^{2}_{\mySrm,\myImath,\myk} + \sigma^{2}_{\mySrm,\myW}$ represents the average power of \myTPI{} plus noise at the $\myk$h subcarrier of the \mySU\ \myRX{}.\\ Using the channel gains and after some algebra, the probability density function (\myPDF{}) $\myp_{\myA^{(\myj)}_{\mySrm,\myk}} (\alpha)$ of $A^{(\myj)}_{\mySrm,k}$ in (\ref{eq:4}) conditioned on $\left|\myD_\myk\right| = \myd_\myk$ is defined as
+\begin{align}
+f^{(\myj)}_{\myA_{\mySrm,\myk}}(\alpha) 
+&:= \myu(\alpha) \; 
+   \frac{\Gamma(3\myj)}{\Gamma(\myj)^2} 
+   \left( \frac{\kappa_\myk}{8} \right)^{\myj/2} 
+   \alpha^{\myj/2 - 1} 
+   \exp\Bigl(\frac{\kappa_\myk}{8} \, \alpha \Bigr) 
+   \nonumber \\[0.2em]
+&\quad \times \mathcal{D}_{-3\myj}\Bigl( 2 \sqrt{\frac{\kappa_\myk}{8} \, \alpha} \Bigr),
+\label{eq:3}
+\end{align}
+
+\noindent with 
+\[
+\kappa_\myk = \frac{1}{\myp_\myk \, \myd_\myk \, \sigma^2_{\mySrm\mySrm,\myk}}, \quad
+\mathcal{D}_\nu(\cdot) \text{ denotes the parabolic cylindrical function~\cite{Gradshteyn2007_alt}}.
+\]
+
+and $u(\cdot)$ represents the unit-step function.
+
+To evaluate the system performance, we need the coded \mySU\ transmission \myBEP{}, a closed form representation of which is not available. Instead, we use an upper bound on the expected coded \myBEP{} $\myP^{(\mycorm)}_{\mybrm,\mathrm{\myQAM{}},\myj}$ of the $\myj$th transmission for 
+$\myA^{(\myj)}_{\mySrm,\myk} = \alpha^{(\myj)}_{\mySrm,\myk}$ averaged over the statistics of 
+$\mathbf{\myA}^{(\myj)}_{\mySrm} = \big[\, \alpha^{(\myj)}_{\mySrm,0},\ldots,\alpha^{(\myj)}_{\mySrm,\myK-1} \,\big]^{\myTrm}$.
+
+Averaging over $\myK$ subcarriers, one obtains
+
+\begin{align}
+\myP^{(\mycorm)}_{\mybrm,\myQAMrm,\myj}
+&\le \myP^{(\myj)}_{\myUBrm} \notag \\
+&\hspace{-1cm}= \sum_{\myd = \myd_{\min}}^{\myn}
+   \sum_{\myw = 1}^{\myk}
+   \frac{\myw}{\myk}\, \myA_{\myw,\myd}
+   \sum_{\nu = 0}^{\lfloor\frac{\myd}{2}\rfloor}
+   \binom{\lfloor\frac{\myd}{2}\rfloor}{\nu}
+   (-1)^{\nu}\,
+   \xi(\nu,\myd,\myj),
+\label{eq:4}
+\end{align}
+
+with \!$\xi(\nu,\myd,\myj)
+=\!\myE[\myAbf{}^{(\myj)}_{\mySrm}]
+{
+\Bigl(\myP^{(\myunrm)}_{\mybrm,\myQAMrm},\myj\Bigr)^{\lfloor \tfrac{\myd}{2} \rfloor + \nu}
+}.$ Here, $\myd_{\myminmathrm}$ and $\myA_{\myw,\myd}$ denote the minimum distance of the parity check matrix corresponding to an $(\myn,\myk)$ \myLDPC\ code, and the number of possible code words of Hamming weight $\myd$ with $\myw$ information bits\linebreak in error, respectively. Furthermore, $\myP^{(\myunrm)}_{\mybrm,\myQAMrm,\myj}$ is the conditional uncoded \mySU\ \myBEP{} of the $\myj$th transmission averaged over $\myK$ subcarriers \cite{Mutti2003_alt}, and is given by
+\begin{equation*}
+P^{(\myunrm)}_{\mybrm{},\myQAMrm,\myj}
+= \frac{1}{3\myMtot}
+  \sum_{\myk \in \Omega_{0,\myK}} \beta_{\myk}\,
+  \myf\bigl(\alpha^{(\myj)}_{\mySrm,\myk}\bigr)
+= \frac{\myG\bigl(\myAbf{}^{(\myj)}_{\mySrm}\bigr)}{3\myMtot}.
+\end{equation*}
+Here, $\beta_{\myk}= \frac{\sqrt{\myM_{\myk}} - 1}{\sqrt{\myM_{\myk}}}$, with
+$\myM_{\myk} = 2^{\mym_{\myk}}$ and the function $
+\myf\bigl(\alpha^{(\myj)}_{\mySrm,\myk}\bigr)
+=
+e^{-\frac{3\alpha^{(\myj)}_{\mySrm,\myk}}{2(\myM_{\myk}-1)}}
++ 3 e^{-\frac{2\alpha^{(\myj)}_{\mySrm,\myk}}{\myM_{\myk}-1}}
+$ is the approximation of the Q-function as a sum of two weighted exponential functions~\cite{Mutti2003_alt,Karagiannidis2007_alt}.
+The sum of $\myK$ i.i.d. random variables can be expressed as
+\[
+\mathcal{G}\Bigl(\mathbf{A}^{(\myj)}_{\mySrm}\Bigr) 
+= \sum_{k \in \Omega_{0,K}} \beta_k \; 
+  f\Bigl(A^{(\myj)}_{\mySrm,k}\Bigr).
+\]
+\newpage
+
+\begin{minipage}[t][12cm]{\columnwidth}
+
+is approximated as a Gaussian distributed RV
+\begin{equation*}
+\mathcal{G}\Bigl(\mathbf{A}^{(\myj)}_{\mySrm}\Bigr) \sim 
+\mathcal{N}\Bigl( \mu_{\mathcal{G},\myj}, \; \sigma^2_{\mathcal{G},\myj} \Bigr),
+\end{equation*}
+
+\noindent
+where
+\begin{equation*}
+\mu_{\mathcal{G},\myj} = \sum_{k \in \Omega_{0,K}} \mu_{k,\myj}, 
+\quad \text{and} \quad
+\sigma^2_{\mathcal{G},\myj} = \sum_{k \in \Omega_{0,K}} \sigma^2_{k,\myj}.
+\end{equation*}
+
+Here, the mean and variance for subcarrier $k$, i.e., $\mu_{k,\myj}$ and $\sigma^2_{k,\myj}$, 
+are computed by averaging 
+$\beta_k f\bigl(A^{(\myj)}_{\mySrm,k}\bigr)$ 
+over the joint statistics of $A^{(\myj)}_{\mySrm,k}$ and the QAM symbol power $|D_k|^2$, 
+where $|D_k|^2 = \epsilon$ has the probability mass function~\cite{Mansour2018_alt}:
+
+\begin{equation}
+p_{|D_k|^2}(\epsilon)
+=
+\sum_{i=1}^{K_{m_k}} S_{i,m_k} \;
+\delta\Bigl(\epsilon - d^2_{i,m_k} \Bigr),
+\label{eq:5}
+\end{equation}
+
+with 
+$K_{m_k} = 3 - 2 m_k + \frac{m_k^2}{2}$ 
+distinct power levels $|D_k|^2 = d^2_{i,m_k}$ in a single quadrant of $\Omega_{\myQAMrm}$.  
+The sets $\{ d^2_{i,m_k} \} \subset \Omega_{d,m_k}$ 
+and $\{ S_{i,m_k} \} \subset \Omega_{S,m_k}$ are given in~\cite{Ding2012_alt}.  
+
+Using (\ref{eq:3}) and (\ref{eq:5}), the mean can be written as
+
+\begin{equation*}
+\begin{split}
+\mu_{k,\myj} 
+&= \mathbb{E}\bigl[ \beta_k f(A^{(\myj)}_{\mySrm,k}) \bigr] 
+= \beta_k \int_0^{\infty} f(\alpha) \, p_{A^{(\myj)}_{\mySrm,k}}(\alpha) \, d\alpha \\[0.2em]
+&= \beta_k \frac{\Gamma(3\myj)}{\Gamma(\myj)^2} 
+  \sum_{i=1}^{K_{m_k}} S_{i,m_k} 
+  \Bigl( \frac{\kappa_{k,i}}{8} \Bigr)^{\myj/2} 
+  \int_0^{\infty} 
+    \alpha^{\myj/2-1} \,
+    \mathcal{D}_{-3\myj}\Bigl( 2 \sqrt{\frac{\kappa_{k,i} \alpha}{8}} \Bigr) 
+    e^{\kappa_{k,i}\alpha/8} \\ 
+&\quad \times \Bigl( e^{-c_{1,k} \alpha} + 3 \, e^{-c_{2,k} \alpha} \Bigr) 
+\, d\alpha \\[0.2em]
+&= \beta_k \, \theta_{\myj} 
+  \sum_{i=1}^{K_{m_k}} S_{i,m_k} 
+  \Bigl( \frac{\kappa_{k,i}}{8} \Bigr)^{\myj/2} 
+  \Bigl( \Psi(c_{1,k},\myj) + 3 \, \Psi(c_{2,k},\myj) \Bigr).
+\end{split}
+\end{equation*}
+
+Here, the function $\Psi(x,\myj)$ is defined as
+\[
+\Psi(x,\myj) = x^{-\myj/2} \;
+\mathcal{F}\Bigl( \tfrac{3\myj}{2}, \tfrac{\myj}{2}; 2\myj + \tfrac{1}{2}; 1 - \tfrac{\kappa_{k,i}}{4x} \Bigr),
+\]
+where $\mathcal{F}(a,b;c;z)$ denotes the hypergeometric function~\cite{Gradshteyn2007_alt}, 
+and 
+\[
+\kappa_{k,i} = \frac{1}{p_k \, d^2_{i,m_k} \, \sigma^2_{\mySrm\mySrm,k}}.
+\]
+
+The constants are given by
+\[
+c_{1,k} = \frac{3}{2(M_k-1)}, \quad
+c_{2,k} = \frac{2}{M_k-1}, \quad
+\theta_{\myj} = 
+\frac{\Gamma(3\myj) \, \sqrt{\pi}}{\Gamma(\myj) \, \Gamma\bigl(2\myj + \tfrac{1}{2}\bigr) \, (\sqrt{2})^{5\myj-2}}.
+\]
+
+Similarly, the variance for subcarrier $k$ is obtained as
+\[
+\sigma^2_{k,\myj} = 
+\mathbb{E}\Bigl[ \bigl( \beta_k f(A^{(\myj)}_{\mySrm,k}) \bigr)^2 \Bigr] - \mu^2_{k,\myj}.
+\]
+can be found using
+
+\begin{equation*}
+\hspace*{-1cm}
+\myE[\myA^{(\myj)}_{\mySrm,\myk}]
+{
+   \left(\myf\left(\myA^{(\myj)}_{\mySrm,\myk}\right)\right)^2
+}
+= \theta_\myj \sum_{\myi=1}^{\myK_{\mym_\myk}}
+\myS_{\myi,\mym_\myk}
+\left(\frac{\kappa_{\myk,\myi}}{8}\right)^{\frac{\myj}{2}}
+\end{equation*}
+
+\begin{equation*}
+\hspace*{0.5cm}
+\times\quad \left(
+   \Psi(\myc_{3,\myk}, \myj)
+   + 9\Psi(\myc_{4,\myk}, \myj)
+   + 6\Psi(\myc_{5,\myk}, \myj)
+\right),
+\end{equation*}
+
+where
+$
+\myc_{3,\myk} = \frac{3}{\myM_\myk - 1},
+\
+\myc_{4,\myk} = \frac{4}{\myM_\myk - 1},
+\myc_{5,\myk} = \frac{7}{2(\myM_\myk - 1)}.
+$
+
+Finally, the upper bound in (\ref{eq:4}) is given by
+
+\begin{equation*}
+\begin{aligned}
+\myP^{(\myj)}_{\myUBrm}
+&=
+\sum_{\myd=\myd_{\min}}^{\myn}
+\sum_{\myw=1}^{\myk}
+\frac{\myw}{\myk}\, \myA_{\myw,\myd}
+\sum_{\nu=0}^{\lfloor \frac{\myd}{2} \rfloor}
+\binom{\lfloor \frac{\myd}{2} \rfloor}{\nu}
+(-1)^{\nu}
+\\[4pt]
+&\hspace{0.5cm}\times
+\left( \frac{1}{3\myMtot} \right)^{\myp}
+\sum_{\myi=0}^{\myp}
+\binom{\myp}{\myi}\,
+\mu^{\myi}_{\myG,\myj}\,
+\zeta_{\myp-\myi,\myj},
+\end{aligned}
+\end{equation*}
+
+\end{minipage}
+
+\newpage
+\begin{minipage}[t][12cm]{\columnwidth}
+
+with $\myp = \lfloor \frac{\myd}{2} \rfloor +\nu$ and the central moments for $\myp \in \myNbb$ given by
+\begin{align*}
+\zeta_{\myp,\myj}
+&=
+\quad\myE[\myAbf^{(\myj)}_{\mySrm}]
+{
+    \left(
+        \myG\left( \myAbf^{(\myj)}_{\mySrm} \right)
+        - \mu_{\myG,\myj}
+    \right)^{\myp}
+}
+\\
+&=\quad
+1 \cdot 3 \cdot \ldots (\myp-1)\,
+\sigma_{\myG,\myj}^{\,\myp}\,
+( (\myp+1)\bmod\!2 ).
+\end{align*}
+The dependeny of the different expressions on $\myR_\myc,$ $\mypbf$ and $\mymbf$ \!is not indicated for better readability of the resulting formulas.
+\vspace{-1em}
+\subsection{Data Link Layer Parameters}
+\label{sec:3b}
+
+The \mySU{} \myRX{} determines if at least one estimated bit $\hat \myB_{\kappa}$ in the received packet is in error compared to the information bit
+$B_{\kappa}$, and generates a \myTHARQ{} over a one-bit feedback channel
+to request the \mySU{} \myTX{} to retransmit the packet. The \mySU{} \myTX{}
+\myTHARQ{} determines and retransmits the required packet from
+the \myTX{} buffer. The \myPEP{} $\myP^{(\myj)}_{\mypac}$ of the \mySU{} transmission after $\myj$ transmissions can be upper bounded by a union bound $\myP^{(\myj)}$ given by
+\[
+\myP^{(\myj)}_{\mypacrm}
+= 
+\Pr\left\{
+    \bigcup_{\kappa = 1}^{\myL \myMtot\myR_{\myc}}
+    \; \myB_{\kappa} \ne \hat{\myB}_{\kappa}
+\right\}
+\le
+\myL \myMtot \myR_{\myc} \, \myP^{(\myj)}_{\myUBrm}
+= 
+\myP^{(\myj)} ,
+\]
+with 
+$\myP^{(\myj)} = \myP^{(\myj)}(\mypbf, \mymbf, \myR_{\myc})$.
+To simplify the system analysis,
+the following assumptions have been made:
+\begin{itemize}[leftmargin=1.9em]
+    \renewcommand\labelitemi{$\scriptstyle\bullet$}
+    \item A packet is deemed lost, if it is still decoded with errors after $\myJ_{\max}+1$ transmissions.
+    \item The noise and \myTPI\ profiles are known at the \mySU\ \myRX\ and \myPU\ \myRX{}.
+    \item Perfect error detection is achieved using \myCRC{}.
+    \item The feedback channel is error-free and has no latency.
+\end{itemize}
+To evaluate the system performance of the \mySU\ transmission,
+the average \mySU\ \mySE\ is defined by
+\begin{equation}
+\bar{\myS}(\mypbf,\mymbf,\myR_\myc)
+  = \frac{\myL \myMtot \myR_\myc}{\myK}
+    \, \myE{\frac{\myImath(\myJ)}{\myJ}},
+\label{eq:6}
+\end{equation}
+with the indicator function
+\[
+\myImath(\myj) =
+\begin{cases}
+  1, & \text{for\quad} 1 \le \myj \le \myJ_{\max}+1 \\[0.3em]
+  0, & \text{else}.
+\end{cases}
+\]
+Furthermore, the probability for a packet to require $\myj$ transmissions for error-free reception is given by
+\begin{equation}
+\Pr\{\myj\} =
+\begin{cases}
+\displaystyle \Bigl( 1 - \myP_{\mypacrm}^{(\myj)} \Bigr) 
+\prod_{i=1}^{\myj-1} \myP_{\mypacrm}^{(i)}, 
+& 1 \le \myj \le \myJ_{\max}, \\[1em]
+\displaystyle \prod_{i=1}^{\myj-1} \myP_{\mypacrm}^{(i)}, 
+& \myj = \myJ_{\max}+1.
+\end{cases}
+\label{eq:7}
+\end{equation}
+
+\noindent
+Using (\ref{eq:6}) and (\ref{eq:7}), a lower bound on the spectral efficiency can be written as
+\[
+\myS_{\myLBrm} \le \bar{\myS}(\mypbf,\mymbf,\myR_\myc),
+\]
+where
+\begin{equation}
+\myS_{\myLBrm} 
+= \alpha \, \mathbb{E} \Biggl[
+    \frac{\myI(\myJ)}{\myJ} \;\Big|\; \myP_{\mypacrm}^{(\myj)} \to \myP^{(\myj)}
+\Biggr]
+= \alpha \left(
+    1 - \sum_{\myj=1}^{\myJ_{\max}} 
+        \frac{\displaystyle \prod_{i=1}^{\myj-1} \myP^{(i)}}{\myj (\myj+1)}
+\right).
+\label{eq:8}
+\end{equation}
+
+with $\alpha = \frac{\myL \myMtot \myR_{\myc}}{\myK}$. 
+Similarly, an upper bound $\bar{\myJ}_{\myUBrm}$ on the
+average number of transmissions $\bar{\myJ}$ is given by
+\begin{equation*}
+    \bar{\myJ}_{\myUBrm}
+    = \myE {\, \myJ \,\big|_{\myP_{\mypacrm}^{(\myj)} \leftarrow \myP^{(\myj)}} }
+    = 1 + \sum_{\myj=1}^{\myJ_{\max}} \prod_{\myi=1}^{\myj} \myP^{(\myi)} .
+\end{equation*}
+
+\end{minipage}
+
+\clearpage
+
+\subsection{Cross-Layer Optimization Problem}
+\label{sec:3c}
+\myCLO\ is proposed to maximize $\myS_{\myLBrm}$ in (\ref{eq:8}) by carefully selecting
+$(\mypbf, \mymbf, \myR_{\myc}) \in \Omega_{\myp} \times \Omega_{\mym} \times \Omega_{\myR_{\myc}}$
+taking into account specific \myQoS\ constraints outlined below. Here, $\Omega_{\myp}$,
+$\Omega_{\mym}$ and $\Omega_{\myR_{\myc}}$ represent the set $\myRbb^{+}_{0}$ of powers,
+the set of $\myK$-length vectors of possible BL patterns \cite{Mansour2018_alt} and the set of
+rate-matched \myLDPC\ code rates available at the \mySU\ \myTX{}. The maximization problem reads
+\begin{equation*}
+\left[ \hat{\mypbf}_{\myoptrm},\,
+       \hat{\mymbf}_{\myoptrm},\,
+       \hat{\myR}_{\myc,\myoptrm}
+\right]
+=\arg\hspace{-4ex}\max\limits_{(\mypbf,\,\mymbf,\,\myR_\myc)\in\Omega_{\mypbf}\times\Omega_{\mymbf}\times\Omega_{\myR_\myc}}
+\hspace{-0.5ex}S_{\myLBrm}(\mypbf,\,\mymbf,\,\myR_\myc)
+\end{equation*}
+
+\begin{align}\hspace{2.5cm}
+    \text{subject to}\qquad\quad 
+    \myp_\myk &\ge 0                                   
+        && \label{eq:9} \\
+    \sum_{\myk\in\Omega_{0,\myk}} \myp_\myk &\le \myp_{\mytotrm}      
+        && \label{eq:10} \\
+    (\mym_\myk - 2)(\mym_\myk - 4)(\mym_\myk - 6) &= 0            
+        && \label{eq:11} \\
+    \sum_{\mym_\myk\in\Omega_{0,\myk}} \mym_\myk &= \myMtot      
+        && \label{eq:12} \\
+    \Pr\{\myI_\myk \le \myi_{\mytemprm}\} &\ge \mya
+        && \label{eq:13} \\
+    \myD &\le \myD_{\max}                             
+        && \label{eq:14} \\
+    L\myMtot \myR_\myc &\ge \myM_{\myreqrm} 
+        && \label{eq:15} \\
+    \prod_{\myj=1}^{\myJ_{\mymax}+1} \myP^{(\myj)} &\le \myp_{\myreqrm}.
+        && \label{eq:16}
+\end{align}
+In~(\ref{eq:9}), the \myCLO{} allocates a non-negative $\myp_\myk$ to each subcarrier,
+while adhering to a constraint on the total available \mySU{} \myTX{}
+transmit power $\myp_{\mytotrm} \ge 0$ specified in~(\ref{eq:10}). The \myBL\ using the available \myQAM\ orders mentioned in Sect.\myII\ is represented in (\ref{eq:11}) maintaining the bit-rate constraint in~\!(\ref{eq:12}) with \!$\myMtot\!=2\myM$ and a fixed integer value $\myM$ chosen to support the intended
+bit-rate with $\myK \le \myM \le 3K$ according to the available bit
+patterns in~(\ref{eq:11}). In~(\ref{eq:13}), we ensure that the \mySU{} transmission
+interference at the \myPU{} \myRX{} does not exceed a predefined $\myi_{\mytemprm}$
+with a confidence level $\mya$. The closed form of the interference
+constraint in~(\ref{eq:13}) is calculated similar to~\cite{Mansour2018_alt} according to
+\begin{equation*}
+\Pr\{\myI_\myk \le \myi_{\mytemprm}\}
+    = 1 - \sum_{\myi=1}^{\myK_{\mym_\myk}}
+        \psi\!\left(\myS_{\myi,\mym_\myk},\, \myd^{2}_{\myi,\mym_\myk},\, \myp_\myk,\, \myk\right) ,
+\end{equation*}
+where $\myI_\myk$ is the interference of the non-\myPU\ signal at the \myPU\ \myRX\ at the $\myk$th subcarrier. Furthermore,
+{\small
+\begin{equation*}
+\psi\!\left(\myS, \myd^2, \myp, \myk\right)
+= \myS \sqrt{\frac{4\phi_{\myp}}{\myp \sigma_{\mySrm\myPrm}^{2} d^{2}
+    + \sigma_{\mathrm{\myP,\myI},\myk}^{2}}}\;
+\myK_{1}\!\left(
+        \sqrt{\frac{4\phi_{\myp}}{
+        \myp \sigma_{\mySrm\myPrm}^{2} \myd^{2}
+        + \sigma_{\myPrm,\myImath,\myk}^{2}}}
+     \right),
+\end{equation*}
+}
+with
+$\phi_{\myp} = \frac{\myi_{\mytemprm}}{\myp\,\sigma_{\myPrm\myPrm}^{2}}$
+and $\myK_{1}(\cdot)$ being the first-order modified Bessel function of the second kind.
+Here,
+$\sigma_{\myPrm\myPrm}^{2}
+    = \myE{ \left| \myH_{\myPrm\myPrm,\myk,\myj} \right|^{2} }
+\quad\text{and}\quad
+\sigma_{\mySrm\myPrm}^{2}
+    = \myE{ \left| \myH_{\mySrm\myPrm,\myk,\myj} \right|^{2}}$ are the channel gains between the \myPU\ \myTX\ and \myPU\ \myRX\, and the
+\mySU\ \myTX\ and \myPU\ \myRX\, respectively. 
+Furthermore, the \myCLO{} ensures that the \mySU{}
+transmission satisfies the \myQoS\ constraints in (\ref{eq:14})-(\ref{eq:16}). First, by selecting
+$\myJ_{\max} = \left\lfloor \myD_{\max}/\myD_{\mytriprm}\right\rfloor$ where $\myD_{\mytriprm}$ defines the round-trip delay of each
+retransmission and $\myD_{\max}$ is the maximum delay, we ensure the total
+transmission delay $\myD$ does not exceed $\myD_{\max}$ in (\ref{eq:14}).
+Secondly, a suitable \linebreak
+\newpage
+$\myR_\myc \in \Omega_{\myR_\myc}$ is selected to guarantee a minimum required data
+rate $\myM_{\myreqrm}$ in (\ref{eq:15}). Finally, in (\ref{eq:16}), the \myCLO\ ensures that the
+\mySU\ \myPEP\ even after $\myJ_{\max}+1$ transmissions does not exceed a predefined threshold $\myp_{\myreqrm}$.
+
+
+
