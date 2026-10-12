@@ -1,0 +1,74 @@
+\vspace{-0.5cm}
+\section{\hspace{-0.5em}System Description}
+\label{sec:2}
+
+We consider the complex baseband representation of a \myUCRS{} with simultaneous transmissions of one \myPU{} (upper horizontal channel) and one \mySU{} (lower horizontal channel) over a time-frequency (\myTF{}) selective fading channel and \myTPI{} as shown in Fig.~\ref{fig:1}.
+
+At time index $\kappa$, the information bits $\myB_{\kappa} \in \{-1, 1\}$ at the input of the \mySU{} \myTX{} are fed to an adaptive bit-interleaved coded modulation (\myABICM{}) comprising:
+\begin{itemize}
+    \item an \myLDPC{} encoder equipped with rate-matching to achieve a desired code rate $\myR_{\myc}$,
+    \item a bit-wise interleaver providing a total of $\myL \myMtot$ interleaved coded bits $\myBlk \in \{-1, 1\}$ at time slot $\myell$ and subcarrier $k \in \Omega_{0,K}$, and
+    \item a \myQAM{} modulator.
+\end{itemize}
+
+Here, $L \in \myNbb$ is the number of multicarrier symbols per \myPHY{} packet, with each symbol containing $\myMtot$ bits. Each symbol is mapped to $\myK$ \myQAM{} symbols, where $\myK \in \myNbb$ denotes the number of subcarriers available at the \mySU{} \myTX{}.
+
+In the \myPHY{} (lower feedback channel), the \myCLO{} comprises three steps~\cite{Muttath2022_alt}:
+
+\begin{enumerate}
+    \item \textbf{\myCA{}}: An optimized code rate $\myR_{\myc,\myoptrm}$ is selected from the available code rates in $\Omega_{\myRC{}}$ and fed back to the transmitter.
+    
+    \item \textbf{\myBL{}}: The vector $\mymbf = \big[\mym_0, \ldots, \mym_{\myK-1} \big]^{\myTrm}$, containing the number of bits per subcarrier with $\mym_\myk \in \{2,4,6\}$, is optimized as $\hat{\mymbf}_\myoptrm$ and fed back to the \mySU{} \myTX{}. The bits $\myB_{\ell,\myk}$ are subsequently mapped to a symbol $\myD_{\ell,\myk}$ from a square-lattice \myQAM{} symbol set~\cite{Mansour2022_alt}. Furthermore, a bit-rate constraint is imposed on each symbol:
+    \[
+        \sum_{\myk \in \Omega_{0,\myK}} \mym_\myk = \myMtot.
+    \]
+    
+    \item \textbf{\myPL{}}: The vector $\mypbf = [\myp_0, \ldots, \myp_{\myK-1}]^{\myTrm}$ is optimized as $\hat{\mypbf}_{\myoptrm}$ and fed back, where $\myp_\myk$ represents the power of the $\myk$th subcarrier signal. The \myQAM{} symbol $\Dlk$ is weighted according to
+    \[
+        \SSelk = \Dlk \sqrt{\myp_\myk}.
+    \]
+\end{enumerate}
+
+The signal outputs $\SSelk$ pass through the synthesis \myFB\ (\mySFB{}) to generate the \mySU{} transmit signal
+ $\mySSn = \sum\limits_{(\myell,\myk)\in\myZbb\times\myOmegaZeroK}
+\mySSellk\mygellk{\myn}$. Here, the \myTF{} shifted pulse $\gkl = \gshift$ of the pulse $\myg[\myn]$ is chosen as to render the analysis \myFB{} (\myAFB{}) output signals mutually orthogonal \cite{Mansour2018_alt}. Furthermore, the \mySU\ \myRX\ uses a \myTHARQ{} type~\myII{} with \myCC{}, which on erroneous reception of the \myCC{} output signal, requests the \mySU\ \myTX\
+to retransmit the information. This retransmission cycle goes on for a random number of $\myJ$ transmissions until an error–free transmission
+is obtained at the \myCC{} output or the predefined maximum number of
+retransmissions $\Jmax$ is exceeded, upon which the packet is deemed lost. The \mySU\ \myRX\ received signals at the output of the \myAFB{} for the $\myj$th
+transmission with $j \in \Omega_{1,\Jmax+1}$ are described in the \myTF\
+plane by the coefficients.
+\vspace{-0.6em}
+\begin{align*}
+    \hspace{-1.2ex} \YSelkj 
+    &= \bigl\langle \myY_{\myS,\myj}, \myg_{\ell,\myk} \bigr\rangle \\
+    &= \sum_{\myn \in \myZbb} \YSjn \, \myg^{*}[\myn-\myK \ell] \, 
+       e^{ -\myj \frac{2\pi}{\myK} \myn \myk} \\
+    &\hspace{-0.7cm}= \HSSelkj \myS_{\mySrm,\ell,\myK,\myj} + \XPSelkj + \ISelkj + \WSelkj
+\end{align*}
+\vspace{-1.25em}
+
+Here, $\XPSelkj$, $\ISelkj$ and $\WSelkj$ represent the interference caused by the \myPU\ transmission at the \mySU\ \myRX\, zero–mean complex colored Gaussian \myTPI\ and additive white Gaussian noise at the \mySU\ \myRX{}, respectively. The linear channel $\myHcal_{\mySrm\mySrm}$ between the \mySU\ \myTX\ and \mySU\ \myRX\ is modelled as a memoryless wide–sense stationary (\myWSS{}) uncorrelated scattering (\myUS{}) Rayleigh fading channel with \myTF\ channel coefficient $\HSSelkj$, rendering the transmissions independent of one another. A corresponding representation of the\! \myPU{}\! transmit and receive signals along with a complete description of all signals in Fig.~\ref{fig:1} can be found in \cite{Mansour2018_alt}.
+
+\newpage 
+
+The \myAFB{} output signals $\YSelkj$ are \!fed to \!the \myCC\ for equal-gain combining (\myEGC{}), where all received signals $1,\dots,\myj$ of that particular packet are stored in buffers, if any. The combined signal $\YSjelk$ at the output of the \myCC\ is given by
+\begin{equation}
+  \YSjelk
+  = \frac{1}{%
+      \sqrt{%
+        \sum\limits_{{\myj}'=1}^{\myj} \bigl|\myH_{\mySrm\mySrm,\myk,{\myj}'}\bigr|^{2}%
+      }%
+    }
+    \sum_{{\myj}'=1}^{\myj} \HSSelkjpconj \, \YSelkjp \, .
+  \label{eq:1}
+\end{equation}
+
+
+In Fig.~\ref{fig:1}, the combiner output is fed to the block $\myABICMinv$
+consisting of a \myQAM\ demodulator, a bit-wise \myDeinterleaver\ and
+an \myLDPC\ decoder. The decoded packet is passed to a cyclic
+redundancy check~(\myCRC{}) which outputs bit estimates~$\myBhatkhat$~upon passing the \myCRC{} or otherwise signals the next \myTHARQ\ iteration according to Sect.~\ref{sec:3b}.
+
+Depending on the considered application scenario, the channel
+estimator at the \mySU{} \myRX{} can be employed for acquisition of channel state information as in~\cite{Su2014_alt} and~\cite{Sharma2017_alt}. For the proposed \myCLO\ scheme, only second-order moments of the considered random channel coefficients are required assumed to be known at the \mySU\ \myTX\ and \mySU\ \myRX{}.
+
