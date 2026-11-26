@@ -1,0 +1,679 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PathProof evidence report</title>
+<style>body{margin:2rem auto;max-width:1040px;padding:0 1rem;color:#19303a;background:#fcfcfa;font:16px/1.45 system-ui}h1,h2{color:#154d51}table{border-collapse:collapse;width:100%;font-size:.91rem}td,th{text-align:left;border-bottom:1px solid #c5d3d1;padding:.45rem;overflow-wrap:anywhere}summary{cursor:pointer;font-weight:600;margin:.5rem 0}code{overflow-wrap:anywhere}pre{white-space:pre-wrap;overflow-wrap:anywhere}section{margin:1.7rem 0}.net{height:320px;border:1px solid #c5d3d1}.FAIL,.BLOCKED{font-weight:bold;color:#873b2b}.PASS,.PROVEN{font-weight:bold;color:#156647}</style>
+<h1>PathProof evidence report</h1><p>Snapshot <code>3a8186cd31eae02bf2b3925619aa74293a126d2522c76ecb877c47bcd60bbf64</code></p>
+
+<section><h2>Proof of fix</h2><details open><summary>T1 · verified</summary>
+<p>Saved request <code>9b1317a34e3f48f1449dd204d038908bd52fa4de74e548d089b566d294a3eee4</code></p><table><tr><th>Measurement</th><th>Before</th><th>After</th></tr>
+<tr><td>Verdict or condition</td><td>PROVEN</td><td>BLOCKED</td></tr>
+<tr><td>Blocking control</td><td>—</td><td>canary bucket policy: IMPLICIT_DENY</td></tr>
+<tr><td>reader_can_read_canary</td><td>True</td><td>True</td></tr><tr><td>approved_principal_is_trusted</td><td>True</td><td>True</td></tr><tr><td>instance_keeps_role</td><td>True</td><td>True</td></tr></table>
+<details><summary>Request evidence and patch</summary><pre>{
+  "authorized_read": {
+    "actor": "arn:aws:iam::111111111111:user/analyst",
+    "backend": "memory",
+    "control": null,
+    "digest_match": true,
+    "expected_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+    "gate": "ALLOW",
+    "http_status": 200,
+    "method": "GET",
+    "observed_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+    "path": "/classroom/canary.txt",
+    "verdict": "PROVEN"
+  },
+  "control": null,
+  "evidence": {
+    "actor": "Internet",
+    "backend": "memory",
+    "control": null,
+    "digest_match": true,
+    "expected_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+    "gate": "ALLOW",
+    "http_status": 200,
+    "method": "GET",
+    "observed_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+    "path": "/classroom/canary.txt",
+    "verdict": "PROVEN"
+  },
+  "mode": "lab",
+  "must_still_work": {
+    "approved_principal_is_trusted": true,
+    "instance_keeps_role": true,
+    "reader_can_read_canary": true
+  },
+  "observed": true,
+  "plan": {
+    "plan_hash": "9b1317a34e3f48f1449dd204d038908bd52fa4de74e548d089b566d294a3eee4",
+    "steps": [
+      {
+        "actor": "Internet",
+        "operation": "read_registered_canary",
+        "scenario": "T1",
+        "target": "arn:aws:s3:::pathproof-classroom/canary.txt"
+      }
+    ]
+  },
+  "snapshot_id": "3a8186cd31eae02bf2b3925619aa74293a126d2522c76ecb877c47bcd60bbf64",
+  "state": "present",
+  "step_observations": [
+    {
+      "operation": "read_registered_canary",
+      "state": "present"
+    }
+  ],
+  "verdict": "PROVEN"
+}
+{
+  "changed": true,
+  "field": "bucket_statements",
+  "new": [
+    {
+      "Action": "s3:GetObject",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::111111111111:user/analyst"
+      },
+      "Resource": "arn:aws:s3:::pathproof-classroom/canary.txt",
+      "Sid": "KeepAnalyst"
+    }
+  ],
+  "old": [
+    {
+      "Action": "s3:GetObject",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::111111111111:user/analyst"
+      },
+      "Resource": "arn:aws:s3:::pathproof-classroom/canary.txt",
+      "Sid": "KeepAnalyst"
+    },
+    {
+      "Action": "s3:GetObject",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Resource": "arn:aws:s3:::pathproof-classroom/canary.txt",
+      "Sid": "PublicCanary"
+    }
+  ]
+}
+{
+  "authorized_read": {
+    "actor": "arn:aws:iam::111111111111:user/analyst",
+    "backend": "memory",
+    "control": null,
+    "digest_match": true,
+    "expected_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+    "gate": "ALLOW",
+    "http_status": 200,
+    "method": "GET",
+    "observed_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+    "path": "/classroom/canary.txt",
+    "verdict": "PROVEN"
+  },
+  "control": "canary bucket policy: IMPLICIT_DENY",
+  "evidence": {
+    "actor": "Internet",
+    "backend": "memory",
+    "control": "canary bucket policy: IMPLICIT_DENY",
+    "digest_match": null,
+    "gate": "IMPLICIT_DENY",
+    "http_status": 403,
+    "method": "GET",
+    "path": "/classroom/canary.txt",
+    "verdict": "BLOCKED"
+  },
+  "mode": "lab",
+  "must_still_work": {
+    "approved_principal_is_trusted": true,
+    "instance_keeps_role": true,
+    "reader_can_read_canary": true
+  },
+  "observed": false,
+  "plan": {
+    "plan_hash": "9b1317a34e3f48f1449dd204d038908bd52fa4de74e548d089b566d294a3eee4",
+    "steps": [
+      {
+        "actor": "Internet",
+        "operation": "read_registered_canary",
+        "scenario": "T1",
+        "target": "arn:aws:s3:::pathproof-classroom/canary.txt"
+      }
+    ]
+  },
+  "snapshot_id": "7132b51ef6295e2bfb4a1acb1c8b6f3060006622e145a0328006ebb64ce689b7",
+  "state": "absent",
+  "step_observations": [
+    {
+      "operation": "read_registered_canary",
+      "state": "absent"
+    }
+  ],
+  "verdict": "BLOCKED"
+}</pre></details>
+<h3>Before</h3><p>Graph engine: stdlib rehearsal · Scope: classroom fixtures</p>
+<svg viewBox="0 0 640 325" role="img" aria-label="Inventory relationships"><g stroke="teal"><title>Internet → arn:aws:s3:::pathproof-classroom · can_read</title><line x1="320.0" y1="52.0" x2="227.37822988025425" y2="238.4964632597626"/><polygon points="227.4,238.5 227.3,227.3 236.3,231.8" fill="teal"/></g><g stroke="teal"><title>arn:aws:iam::111111111111:user/student → arn:aws:iam::111111111111:role/records · can_assume</title><line x1="503.73039837998704" y1="92.66310139925679" x2="431.30358726550656" y2="238.4964632597626"/><polygon points="431.3,238.5 431.3,227.3 440.2,231.8" fill="teal"/></g><circle cx="521.7" cy="80.7" r="13" fill="none" stroke="teal"><title>arn:aws:iam::111111111111:user/student → arn:aws:iam::111111111111:user/student · can_modify_policy</title></circle><g stroke="teal"><title>i-classroom → arn:aws:iam::111111111111:role/records · exposes_credentials</title><line x1="90.89194063727146" y1="184.03226086728196" x2="401.4588379704808" y2="252.7667400218672"/><polygon points="401.5,252.8 390.6,255.5 392.8,245.7" fill="teal"/></g><g stroke="teal"><title>Internet → i-classroom · public_ingress_configured</title><line x1="320.0" y1="52.0" x2="109.08683633499274" y2="173.5467579919286"/><polygon points="109.1,173.5 115.3,164.2 120.2,172.9" fill="teal"/></g><g stroke="teal"><title>arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · can_read</title><line x1="421.9626786926262" y1="257.3046377334613" x2="239.03732130737387" y2="257.3046377334613"/><polygon points="239.0,257.3 249.0,252.3 249.0,262.3" fill="teal"/></g><circle cx="320.0" cy="52.0" r="8" fill="teal"/><text x="320.0" y="76.0" text-anchor="middle" font-size="13">Internet</text><circle cx="503.73039837998704" cy="92.66310139925679" r="8" fill="teal"/><text x="503.73039837998704" y="116.66310139925679" text-anchor="middle" font-size="13">student</text><circle cx="549.1080593627286" cy="184.03226086728196" r="8" fill="teal"/><text x="549.1080593627286" y="208.03226086728196" text-anchor="middle" font-size="13">analyst</text><circle cx="421.9626786926262" cy="257.3046377334613" r="8" fill="teal"/><text x="421.9626786926262" y="281.3046377334613" text-anchor="middle" font-size="13">records</text><circle cx="218.03732130737387" cy="257.3046377334613" r="8" fill="teal"/><text x="218.03732130737387" y="281.3046377334613" text-anchor="middle" font-size="13">pathproof-classroom</text><circle cx="90.89194063727146" cy="184.03226086728196" r="8" fill="teal"/><text x="90.89194063727146" y="208.03226086728196" text-anchor="middle" font-size="13">i-classroom</text><circle cx="136.26960162001296" cy="92.66310139925679" r="8" fill="teal"/><text x="136.26960162001296" y="116.66310139925679" text-anchor="middle" font-size="13">db-classroom</text></svg>
+<table><tr><th>Source</th><th>Relationship</th><th>Target</th><th>Evidence</th></tr><tr><td>Internet</td><td>can_read</td><td>arn:aws:s3:::pathproof-classroom</td><td>registered canary policy</td></tr><tr><td>arn:aws:iam::111111111111:user/student</td><td>can_assume</td><td>arn:aws:iam::111111111111:role/records</td><td>caller policy and target trust</td></tr><tr><td>arn:aws:iam::111111111111:user/student</td><td>can_modify_policy</td><td>arn:aws:iam::111111111111:user/student</td><td>self-management permission</td></tr><tr><td>i-classroom</td><td>exposes_credentials</td><td>arn:aws:iam::111111111111:role/records</td><td>metadata setting and attached role</td></tr><tr><td>Internet</td><td>public_ingress_configured</td><td>i-classroom</td><td>modeled ingress</td></tr><tr><td>arn:aws:iam::111111111111:role/records</td><td>can_read</td><td>arn:aws:s3:::pathproof-classroom</td><td>role grant scoped to registered canary</td></tr></table>
+<details><summary>Internet → arn:aws:s3:::pathproof-classroom · 2 modeled routes</summary><p>Internet → arn:aws:s3:::pathproof-classroom · score 30.0 to 30.0</p><p>Internet → i-classroom → arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · score 6.0 to 6.0</p></details><details><summary>Internet → db-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details><details><summary>arn:aws:iam::111111111111:user/student → arn:aws:s3:::pathproof-classroom · 1 modeled routes</summary><p>arn:aws:iam::111111111111:user/student → arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · score 18.0 to 18.0</p></details><details><summary>arn:aws:iam::111111111111:user/student → db-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details><h3>After</h3><p>Graph engine: stdlib rehearsal · Scope: classroom fixtures</p>
+<svg viewBox="0 0 640 325" role="img" aria-label="Inventory relationships"><g stroke="teal"><title>arn:aws:iam::111111111111:user/student → arn:aws:iam::111111111111:role/records · can_assume</title><line x1="503.73039837998704" y1="92.66310139925679" x2="431.30358726550656" y2="238.4964632597626"/><polygon points="431.3,238.5 431.3,227.3 440.2,231.8" fill="teal"/></g><circle cx="521.7" cy="80.7" r="13" fill="none" stroke="teal"><title>arn:aws:iam::111111111111:user/student → arn:aws:iam::111111111111:user/student · can_modify_policy</title></circle><g stroke="teal"><title>i-classroom → arn:aws:iam::111111111111:role/records · exposes_credentials</title><line x1="90.89194063727146" y1="184.03226086728196" x2="401.4588379704808" y2="252.7667400218672"/><polygon points="401.5,252.8 390.6,255.5 392.8,245.7" fill="teal"/></g><g stroke="teal"><title>Internet → i-classroom · public_ingress_configured</title><line x1="320.0" y1="52.0" x2="109.08683633499274" y2="173.5467579919286"/><polygon points="109.1,173.5 115.3,164.2 120.2,172.9" fill="teal"/></g><g stroke="teal"><title>arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · can_read</title><line x1="421.9626786926262" y1="257.3046377334613" x2="239.03732130737387" y2="257.3046377334613"/><polygon points="239.0,257.3 249.0,252.3 249.0,262.3" fill="teal"/></g><circle cx="320.0" cy="52.0" r="8" fill="teal"/><text x="320.0" y="76.0" text-anchor="middle" font-size="13">Internet</text><circle cx="503.73039837998704" cy="92.66310139925679" r="8" fill="teal"/><text x="503.73039837998704" y="116.66310139925679" text-anchor="middle" font-size="13">student</text><circle cx="549.1080593627286" cy="184.03226086728196" r="8" fill="teal"/><text x="549.1080593627286" y="208.03226086728196" text-anchor="middle" font-size="13">analyst</text><circle cx="421.9626786926262" cy="257.3046377334613" r="8" fill="teal"/><text x="421.9626786926262" y="281.3046377334613" text-anchor="middle" font-size="13">records</text><circle cx="218.03732130737387" cy="257.3046377334613" r="8" fill="teal"/><text x="218.03732130737387" y="281.3046377334613" text-anchor="middle" font-size="13">pathproof-classroom</text><circle cx="90.89194063727146" cy="184.03226086728196" r="8" fill="teal"/><text x="90.89194063727146" y="208.03226086728196" text-anchor="middle" font-size="13">i-classroom</text><circle cx="136.26960162001296" cy="92.66310139925679" r="8" fill="teal"/><text x="136.26960162001296" y="116.66310139925679" text-anchor="middle" font-size="13">db-classroom</text></svg>
+<table><tr><th>Source</th><th>Relationship</th><th>Target</th><th>Evidence</th></tr><tr><td>arn:aws:iam::111111111111:user/student</td><td>can_assume</td><td>arn:aws:iam::111111111111:role/records</td><td>caller policy and target trust</td></tr><tr><td>arn:aws:iam::111111111111:user/student</td><td>can_modify_policy</td><td>arn:aws:iam::111111111111:user/student</td><td>self-management permission</td></tr><tr><td>i-classroom</td><td>exposes_credentials</td><td>arn:aws:iam::111111111111:role/records</td><td>metadata setting and attached role</td></tr><tr><td>Internet</td><td>public_ingress_configured</td><td>i-classroom</td><td>modeled ingress</td></tr><tr><td>arn:aws:iam::111111111111:role/records</td><td>can_read</td><td>arn:aws:s3:::pathproof-classroom</td><td>role grant scoped to registered canary</td></tr></table>
+<details><summary>Internet → arn:aws:s3:::pathproof-classroom · 1 modeled routes</summary><p>Internet → i-classroom → arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · score 6.0 to 6.0</p></details><details><summary>Internet → db-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details><details><summary>arn:aws:iam::111111111111:user/student → arn:aws:s3:::pathproof-classroom · 1 modeled routes</summary><p>arn:aws:iam::111111111111:user/student → arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · score 18.0 to 18.0</p></details><details><summary>arn:aws:iam::111111111111:user/student → db-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details></details><details ><summary>T5 · verified</summary>
+<p>Saved request <code>40dc89658f010683544ac9f9d071b35fc263cf6269cfbbd8b0b229a8090ba3b8</code></p><table><tr><th>Measurement</th><th>Before</th><th>After</th></tr>
+<tr><td>Verdict or condition</td><td>present</td><td>absent</td></tr>
+<tr><td>Blocking control</td><td>—</td><td>—</td></tr>
+<tr><td>reader_can_read_canary</td><td>True</td><td>True</td></tr><tr><td>approved_principal_is_trusted</td><td>True</td><td>True</td></tr><tr><td>instance_keeps_role</td><td>True</td><td>True</td></tr></table>
+<details><summary>Request evidence and patch</summary><pre>{
+  "authorized_read": {
+    "actor": "arn:aws:iam::111111111111:user/analyst",
+    "backend": "memory",
+    "control": null,
+    "digest_match": true,
+    "expected_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+    "gate": "ALLOW",
+    "http_status": 200,
+    "method": "GET",
+    "observed_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+    "path": "/classroom/canary.txt",
+    "verdict": "PROVEN"
+  },
+  "control": null,
+  "mode": "lab",
+  "must_still_work": {
+    "approved_principal_is_trusted": true,
+    "instance_keeps_role": true,
+    "reader_can_read_canary": true
+  },
+  "observed": true,
+  "plan": {
+    "plan_hash": "40dc89658f010683544ac9f9d071b35fc263cf6269cfbbd8b0b229a8090ba3b8",
+    "steps": [
+      {
+        "actor": "audit",
+        "operation": "inspect_trail",
+        "scenario": "T5",
+        "target": "trail-classroom"
+      }
+    ]
+  },
+  "snapshot_id": "7132b51ef6295e2bfb4a1acb1c8b6f3060006622e145a0328006ebb64ce689b7",
+  "state": "present",
+  "step_observations": [
+    {
+      "operation": "inspect_trail",
+      "state": "present"
+    }
+  ],
+  "verdict": null
+}
+{
+  "changed": true,
+  "field": "multi_region",
+  "new": true,
+  "old": false
+}
+{
+  "authorized_read": {
+    "actor": "arn:aws:iam::111111111111:user/analyst",
+    "backend": "memory",
+    "control": null,
+    "digest_match": true,
+    "expected_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+    "gate": "ALLOW",
+    "http_status": 200,
+    "method": "GET",
+    "observed_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+    "path": "/classroom/canary.txt",
+    "verdict": "PROVEN"
+  },
+  "control": null,
+  "mode": "lab",
+  "must_still_work": {
+    "approved_principal_is_trusted": true,
+    "instance_keeps_role": true,
+    "reader_can_read_canary": true
+  },
+  "observed": false,
+  "plan": {
+    "plan_hash": "40dc89658f010683544ac9f9d071b35fc263cf6269cfbbd8b0b229a8090ba3b8",
+    "steps": [
+      {
+        "actor": "audit",
+        "operation": "inspect_trail",
+        "scenario": "T5",
+        "target": "trail-classroom"
+      }
+    ]
+  },
+  "snapshot_id": "b1c163507c6d2f8011d90921e7192a2c9538c19611a6cb3fa67945fa9b1fcda0",
+  "state": "absent",
+  "step_observations": [
+    {
+      "operation": "inspect_trail",
+      "state": "absent"
+    }
+  ],
+  "verdict": null
+}</pre></details>
+<h3>Before</h3><p>Graph engine: stdlib rehearsal · Scope: classroom fixtures</p>
+<svg viewBox="0 0 640 325" role="img" aria-label="Inventory relationships"><g stroke="teal"><title>arn:aws:iam::111111111111:user/student → arn:aws:iam::111111111111:role/records · can_assume</title><line x1="503.73039837998704" y1="92.66310139925679" x2="431.30358726550656" y2="238.4964632597626"/><polygon points="431.3,238.5 431.3,227.3 440.2,231.8" fill="teal"/></g><circle cx="521.7" cy="80.7" r="13" fill="none" stroke="teal"><title>arn:aws:iam::111111111111:user/student → arn:aws:iam::111111111111:user/student · can_modify_policy</title></circle><g stroke="teal"><title>i-classroom → arn:aws:iam::111111111111:role/records · exposes_credentials</title><line x1="90.89194063727146" y1="184.03226086728196" x2="401.4588379704808" y2="252.7667400218672"/><polygon points="401.5,252.8 390.6,255.5 392.8,245.7" fill="teal"/></g><g stroke="teal"><title>Internet → i-classroom · public_ingress_configured</title><line x1="320.0" y1="52.0" x2="109.08683633499274" y2="173.5467579919286"/><polygon points="109.1,173.5 115.3,164.2 120.2,172.9" fill="teal"/></g><g stroke="teal"><title>arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · can_read</title><line x1="421.9626786926262" y1="257.3046377334613" x2="239.03732130737387" y2="257.3046377334613"/><polygon points="239.0,257.3 249.0,252.3 249.0,262.3" fill="teal"/></g><circle cx="320.0" cy="52.0" r="8" fill="teal"/><text x="320.0" y="76.0" text-anchor="middle" font-size="13">Internet</text><circle cx="503.73039837998704" cy="92.66310139925679" r="8" fill="teal"/><text x="503.73039837998704" y="116.66310139925679" text-anchor="middle" font-size="13">student</text><circle cx="549.1080593627286" cy="184.03226086728196" r="8" fill="teal"/><text x="549.1080593627286" y="208.03226086728196" text-anchor="middle" font-size="13">analyst</text><circle cx="421.9626786926262" cy="257.3046377334613" r="8" fill="teal"/><text x="421.9626786926262" y="281.3046377334613" text-anchor="middle" font-size="13">records</text><circle cx="218.03732130737387" cy="257.3046377334613" r="8" fill="teal"/><text x="218.03732130737387" y="281.3046377334613" text-anchor="middle" font-size="13">pathproof-classroom</text><circle cx="90.89194063727146" cy="184.03226086728196" r="8" fill="teal"/><text x="90.89194063727146" y="208.03226086728196" text-anchor="middle" font-size="13">i-classroom</text><circle cx="136.26960162001296" cy="92.66310139925679" r="8" fill="teal"/><text x="136.26960162001296" y="116.66310139925679" text-anchor="middle" font-size="13">db-classroom</text></svg>
+<table><tr><th>Source</th><th>Relationship</th><th>Target</th><th>Evidence</th></tr><tr><td>arn:aws:iam::111111111111:user/student</td><td>can_assume</td><td>arn:aws:iam::111111111111:role/records</td><td>caller policy and target trust</td></tr><tr><td>arn:aws:iam::111111111111:user/student</td><td>can_modify_policy</td><td>arn:aws:iam::111111111111:user/student</td><td>self-management permission</td></tr><tr><td>i-classroom</td><td>exposes_credentials</td><td>arn:aws:iam::111111111111:role/records</td><td>metadata setting and attached role</td></tr><tr><td>Internet</td><td>public_ingress_configured</td><td>i-classroom</td><td>modeled ingress</td></tr><tr><td>arn:aws:iam::111111111111:role/records</td><td>can_read</td><td>arn:aws:s3:::pathproof-classroom</td><td>role grant scoped to registered canary</td></tr></table>
+<details><summary>Internet → arn:aws:s3:::pathproof-classroom · 1 modeled routes</summary><p>Internet → i-classroom → arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · score 6.0 to 6.0</p></details><details><summary>Internet → db-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details><details><summary>arn:aws:iam::111111111111:user/student → arn:aws:s3:::pathproof-classroom · 1 modeled routes</summary><p>arn:aws:iam::111111111111:user/student → arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · score 18.0 to 18.0</p></details><details><summary>arn:aws:iam::111111111111:user/student → db-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details><h3>After</h3><p>Graph engine: stdlib rehearsal · Scope: classroom fixtures</p>
+<svg viewBox="0 0 640 325" role="img" aria-label="Inventory relationships"><g stroke="teal"><title>arn:aws:iam::111111111111:user/student → arn:aws:iam::111111111111:role/records · can_assume</title><line x1="503.73039837998704" y1="92.66310139925679" x2="431.30358726550656" y2="238.4964632597626"/><polygon points="431.3,238.5 431.3,227.3 440.2,231.8" fill="teal"/></g><circle cx="521.7" cy="80.7" r="13" fill="none" stroke="teal"><title>arn:aws:iam::111111111111:user/student → arn:aws:iam::111111111111:user/student · can_modify_policy</title></circle><g stroke="teal"><title>i-classroom → arn:aws:iam::111111111111:role/records · exposes_credentials</title><line x1="90.89194063727146" y1="184.03226086728196" x2="401.4588379704808" y2="252.7667400218672"/><polygon points="401.5,252.8 390.6,255.5 392.8,245.7" fill="teal"/></g><g stroke="teal"><title>Internet → i-classroom · public_ingress_configured</title><line x1="320.0" y1="52.0" x2="109.08683633499274" y2="173.5467579919286"/><polygon points="109.1,173.5 115.3,164.2 120.2,172.9" fill="teal"/></g><g stroke="teal"><title>arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · can_read</title><line x1="421.9626786926262" y1="257.3046377334613" x2="239.03732130737387" y2="257.3046377334613"/><polygon points="239.0,257.3 249.0,252.3 249.0,262.3" fill="teal"/></g><circle cx="320.0" cy="52.0" r="8" fill="teal"/><text x="320.0" y="76.0" text-anchor="middle" font-size="13">Internet</text><circle cx="503.73039837998704" cy="92.66310139925679" r="8" fill="teal"/><text x="503.73039837998704" y="116.66310139925679" text-anchor="middle" font-size="13">student</text><circle cx="549.1080593627286" cy="184.03226086728196" r="8" fill="teal"/><text x="549.1080593627286" y="208.03226086728196" text-anchor="middle" font-size="13">analyst</text><circle cx="421.9626786926262" cy="257.3046377334613" r="8" fill="teal"/><text x="421.9626786926262" y="281.3046377334613" text-anchor="middle" font-size="13">records</text><circle cx="218.03732130737387" cy="257.3046377334613" r="8" fill="teal"/><text x="218.03732130737387" y="281.3046377334613" text-anchor="middle" font-size="13">pathproof-classroom</text><circle cx="90.89194063727146" cy="184.03226086728196" r="8" fill="teal"/><text x="90.89194063727146" y="208.03226086728196" text-anchor="middle" font-size="13">i-classroom</text><circle cx="136.26960162001296" cy="92.66310139925679" r="8" fill="teal"/><text x="136.26960162001296" y="116.66310139925679" text-anchor="middle" font-size="13">db-classroom</text></svg>
+<table><tr><th>Source</th><th>Relationship</th><th>Target</th><th>Evidence</th></tr><tr><td>arn:aws:iam::111111111111:user/student</td><td>can_assume</td><td>arn:aws:iam::111111111111:role/records</td><td>caller policy and target trust</td></tr><tr><td>arn:aws:iam::111111111111:user/student</td><td>can_modify_policy</td><td>arn:aws:iam::111111111111:user/student</td><td>self-management permission</td></tr><tr><td>i-classroom</td><td>exposes_credentials</td><td>arn:aws:iam::111111111111:role/records</td><td>metadata setting and attached role</td></tr><tr><td>Internet</td><td>public_ingress_configured</td><td>i-classroom</td><td>modeled ingress</td></tr><tr><td>arn:aws:iam::111111111111:role/records</td><td>can_read</td><td>arn:aws:s3:::pathproof-classroom</td><td>role grant scoped to registered canary</td></tr></table>
+<details><summary>Internet → arn:aws:s3:::pathproof-classroom · 1 modeled routes</summary><p>Internet → i-classroom → arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · score 4.0 to 4.0</p></details><details><summary>Internet → db-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details><details><summary>arn:aws:iam::111111111111:user/student → arn:aws:s3:::pathproof-classroom · 1 modeled routes</summary><p>arn:aws:iam::111111111111:user/student → arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · score 12.0 to 12.0</p></details><details><summary>arn:aws:iam::111111111111:user/student → db-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details></details><details ><summary>T2 · verified</summary>
+<p>Saved request <code>4723750c7fa410faa3c9a0ef189bb5599531b2f2f980c828733d5a9ab6b9429f</code></p><table><tr><th>Measurement</th><th>Before</th><th>After</th></tr>
+<tr><td>Verdict or condition</td><td>THEORETICAL</td><td>BLOCKED</td></tr>
+<tr><td>Blocking control</td><td>—</td><td>local policy evaluator: target trust</td></tr>
+<tr><td>reader_can_read_canary</td><td>True</td><td>True</td></tr><tr><td>approved_principal_is_trusted</td><td>True</td><td>True</td></tr><tr><td>instance_keeps_role</td><td>True</td><td>True</td></tr></table>
+<details><summary>Request evidence and patch</summary><pre>{
+  "authorized_read": {
+    "actor": "arn:aws:iam::111111111111:user/analyst",
+    "backend": "memory",
+    "control": null,
+    "digest_match": true,
+    "expected_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+    "gate": "ALLOW",
+    "http_status": 200,
+    "method": "GET",
+    "observed_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+    "path": "/classroom/canary.txt",
+    "verdict": "PROVEN"
+  },
+  "control": null,
+  "decisions": {
+    "caller permission": "ALLOW",
+    "target trust": "ALLOW"
+  },
+  "mode": "lab",
+  "must_still_work": {
+    "approved_principal_is_trusted": true,
+    "instance_keeps_role": true,
+    "reader_can_read_canary": true
+  },
+  "observed": true,
+  "plan": {
+    "plan_hash": "4723750c7fa410faa3c9a0ef189bb5599531b2f2f980c828733d5a9ab6b9429f",
+    "steps": [
+      {
+        "actor": "arn:aws:iam::111111111111:user/student",
+        "operation": "check_trust",
+        "scenario": "T2",
+        "target": "arn:aws:iam::111111111111:role/records"
+      },
+      {
+        "actor": "arn:aws:iam::111111111111:role/records",
+        "operation": "inspect_role_canary_grant",
+        "scenario": "T2",
+        "target": "arn:aws:s3:::pathproof-classroom/canary.txt"
+      }
+    ]
+  },
+  "snapshot_id": "b1c163507c6d2f8011d90921e7192a2c9538c19611a6cb3fa67945fa9b1fcda0",
+  "state": "present",
+  "step_observations": [
+    {
+      "operation": "check_trust",
+      "state": "present"
+    },
+    {
+      "operation": "inspect_role_canary_grant",
+      "state": "supported_by_fixture"
+    }
+  ],
+  "verdict": "THEORETICAL"
+}
+{
+  "changed": true,
+  "field": "trust",
+  "new": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::111111111111:user/analyst"
+      },
+      "Sid": "KeepAnalyst"
+    }
+  ],
+  "old": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::111111111111:user/analyst"
+      },
+      "Sid": "KeepAnalyst"
+    },
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::111111111111:user/student"
+      },
+      "Sid": "UnexpectedStudent"
+    }
+  ]
+}
+{
+  "authorized_read": {
+    "actor": "arn:aws:iam::111111111111:user/analyst",
+    "backend": "memory",
+    "control": null,
+    "digest_match": true,
+    "expected_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+    "gate": "ALLOW",
+    "http_status": 200,
+    "method": "GET",
+    "observed_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+    "path": "/classroom/canary.txt",
+    "verdict": "PROVEN"
+  },
+  "control": "local policy evaluator: target trust",
+  "decisions": {
+    "caller permission": "ALLOW",
+    "target trust": "IMPLICIT_DENY"
+  },
+  "mode": "lab",
+  "must_still_work": {
+    "approved_principal_is_trusted": true,
+    "instance_keeps_role": true,
+    "reader_can_read_canary": true
+  },
+  "observed": false,
+  "plan": {
+    "plan_hash": "4723750c7fa410faa3c9a0ef189bb5599531b2f2f980c828733d5a9ab6b9429f",
+    "steps": [
+      {
+        "actor": "arn:aws:iam::111111111111:user/student",
+        "operation": "check_trust",
+        "scenario": "T2",
+        "target": "arn:aws:iam::111111111111:role/records"
+      },
+      {
+        "actor": "arn:aws:iam::111111111111:role/records",
+        "operation": "inspect_role_canary_grant",
+        "scenario": "T2",
+        "target": "arn:aws:s3:::pathproof-classroom/canary.txt"
+      }
+    ]
+  },
+  "snapshot_id": "424e045e367db6ac137e6053dc665a06bc1d4c29bb3a1fe907ad43429311f776",
+  "state": "absent",
+  "step_observations": [
+    {
+      "operation": "check_trust",
+      "state": "absent"
+    },
+    {
+      "operation": "inspect_role_canary_grant",
+      "state": "not_reached"
+    }
+  ],
+  "verdict": "BLOCKED"
+}</pre></details>
+<h3>Before</h3><p>Graph engine: stdlib rehearsal · Scope: classroom fixtures</p>
+<svg viewBox="0 0 640 325" role="img" aria-label="Inventory relationships"><g stroke="teal"><title>arn:aws:iam::111111111111:user/student → arn:aws:iam::111111111111:role/records · can_assume</title><line x1="503.73039837998704" y1="92.66310139925679" x2="431.30358726550656" y2="238.4964632597626"/><polygon points="431.3,238.5 431.3,227.3 440.2,231.8" fill="teal"/></g><circle cx="521.7" cy="80.7" r="13" fill="none" stroke="teal"><title>arn:aws:iam::111111111111:user/student → arn:aws:iam::111111111111:user/student · can_modify_policy</title></circle><g stroke="teal"><title>i-classroom → arn:aws:iam::111111111111:role/records · exposes_credentials</title><line x1="90.89194063727146" y1="184.03226086728196" x2="401.4588379704808" y2="252.7667400218672"/><polygon points="401.5,252.8 390.6,255.5 392.8,245.7" fill="teal"/></g><g stroke="teal"><title>Internet → i-classroom · public_ingress_configured</title><line x1="320.0" y1="52.0" x2="109.08683633499274" y2="173.5467579919286"/><polygon points="109.1,173.5 115.3,164.2 120.2,172.9" fill="teal"/></g><g stroke="teal"><title>arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · can_read</title><line x1="421.9626786926262" y1="257.3046377334613" x2="239.03732130737387" y2="257.3046377334613"/><polygon points="239.0,257.3 249.0,252.3 249.0,262.3" fill="teal"/></g><circle cx="320.0" cy="52.0" r="8" fill="teal"/><text x="320.0" y="76.0" text-anchor="middle" font-size="13">Internet</text><circle cx="503.73039837998704" cy="92.66310139925679" r="8" fill="teal"/><text x="503.73039837998704" y="116.66310139925679" text-anchor="middle" font-size="13">student</text><circle cx="549.1080593627286" cy="184.03226086728196" r="8" fill="teal"/><text x="549.1080593627286" y="208.03226086728196" text-anchor="middle" font-size="13">analyst</text><circle cx="421.9626786926262" cy="257.3046377334613" r="8" fill="teal"/><text x="421.9626786926262" y="281.3046377334613" text-anchor="middle" font-size="13">records</text><circle cx="218.03732130737387" cy="257.3046377334613" r="8" fill="teal"/><text x="218.03732130737387" y="281.3046377334613" text-anchor="middle" font-size="13">pathproof-classroom</text><circle cx="90.89194063727146" cy="184.03226086728196" r="8" fill="teal"/><text x="90.89194063727146" y="208.03226086728196" text-anchor="middle" font-size="13">i-classroom</text><circle cx="136.26960162001296" cy="92.66310139925679" r="8" fill="teal"/><text x="136.26960162001296" y="116.66310139925679" text-anchor="middle" font-size="13">db-classroom</text></svg>
+<table><tr><th>Source</th><th>Relationship</th><th>Target</th><th>Evidence</th></tr><tr><td>arn:aws:iam::111111111111:user/student</td><td>can_assume</td><td>arn:aws:iam::111111111111:role/records</td><td>caller policy and target trust</td></tr><tr><td>arn:aws:iam::111111111111:user/student</td><td>can_modify_policy</td><td>arn:aws:iam::111111111111:user/student</td><td>self-management permission</td></tr><tr><td>i-classroom</td><td>exposes_credentials</td><td>arn:aws:iam::111111111111:role/records</td><td>metadata setting and attached role</td></tr><tr><td>Internet</td><td>public_ingress_configured</td><td>i-classroom</td><td>modeled ingress</td></tr><tr><td>arn:aws:iam::111111111111:role/records</td><td>can_read</td><td>arn:aws:s3:::pathproof-classroom</td><td>role grant scoped to registered canary</td></tr></table>
+<details><summary>Internet → arn:aws:s3:::pathproof-classroom · 1 modeled routes</summary><p>Internet → i-classroom → arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · score 4.0 to 4.0</p></details><details><summary>Internet → db-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details><details><summary>arn:aws:iam::111111111111:user/student → arn:aws:s3:::pathproof-classroom · 1 modeled routes</summary><p>arn:aws:iam::111111111111:user/student → arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · score 12.0 to 12.0</p></details><details><summary>arn:aws:iam::111111111111:user/student → db-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details><h3>After</h3><p>Graph engine: stdlib rehearsal · Scope: classroom fixtures</p>
+<svg viewBox="0 0 640 325" role="img" aria-label="Inventory relationships"><circle cx="521.7" cy="80.7" r="13" fill="none" stroke="teal"><title>arn:aws:iam::111111111111:user/student → arn:aws:iam::111111111111:user/student · can_modify_policy</title></circle><g stroke="teal"><title>i-classroom → arn:aws:iam::111111111111:role/records · exposes_credentials</title><line x1="90.89194063727146" y1="184.03226086728196" x2="401.4588379704808" y2="252.7667400218672"/><polygon points="401.5,252.8 390.6,255.5 392.8,245.7" fill="teal"/></g><g stroke="teal"><title>Internet → i-classroom · public_ingress_configured</title><line x1="320.0" y1="52.0" x2="109.08683633499274" y2="173.5467579919286"/><polygon points="109.1,173.5 115.3,164.2 120.2,172.9" fill="teal"/></g><g stroke="teal"><title>arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · can_read</title><line x1="421.9626786926262" y1="257.3046377334613" x2="239.03732130737387" y2="257.3046377334613"/><polygon points="239.0,257.3 249.0,252.3 249.0,262.3" fill="teal"/></g><circle cx="320.0" cy="52.0" r="8" fill="teal"/><text x="320.0" y="76.0" text-anchor="middle" font-size="13">Internet</text><circle cx="503.73039837998704" cy="92.66310139925679" r="8" fill="teal"/><text x="503.73039837998704" y="116.66310139925679" text-anchor="middle" font-size="13">student</text><circle cx="549.1080593627286" cy="184.03226086728196" r="8" fill="teal"/><text x="549.1080593627286" y="208.03226086728196" text-anchor="middle" font-size="13">analyst</text><circle cx="421.9626786926262" cy="257.3046377334613" r="8" fill="teal"/><text x="421.9626786926262" y="281.3046377334613" text-anchor="middle" font-size="13">records</text><circle cx="218.03732130737387" cy="257.3046377334613" r="8" fill="teal"/><text x="218.03732130737387" y="281.3046377334613" text-anchor="middle" font-size="13">pathproof-classroom</text><circle cx="90.89194063727146" cy="184.03226086728196" r="8" fill="teal"/><text x="90.89194063727146" y="208.03226086728196" text-anchor="middle" font-size="13">i-classroom</text><circle cx="136.26960162001296" cy="92.66310139925679" r="8" fill="teal"/><text x="136.26960162001296" y="116.66310139925679" text-anchor="middle" font-size="13">db-classroom</text></svg>
+<table><tr><th>Source</th><th>Relationship</th><th>Target</th><th>Evidence</th></tr><tr><td>arn:aws:iam::111111111111:user/student</td><td>can_modify_policy</td><td>arn:aws:iam::111111111111:user/student</td><td>self-management permission</td></tr><tr><td>i-classroom</td><td>exposes_credentials</td><td>arn:aws:iam::111111111111:role/records</td><td>metadata setting and attached role</td></tr><tr><td>Internet</td><td>public_ingress_configured</td><td>i-classroom</td><td>modeled ingress</td></tr><tr><td>arn:aws:iam::111111111111:role/records</td><td>can_read</td><td>arn:aws:s3:::pathproof-classroom</td><td>role grant scoped to registered canary</td></tr></table>
+<details><summary>Internet → arn:aws:s3:::pathproof-classroom · 1 modeled routes</summary><p>Internet → i-classroom → arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · score 4.0 to 4.0</p></details><details><summary>Internet → db-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details><details><summary>arn:aws:iam::111111111111:user/student → arn:aws:s3:::pathproof-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details><details><summary>arn:aws:iam::111111111111:user/student → db-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details></details><details ><summary>T3 · verified</summary>
+<p>Saved request <code>e6f91ee47859bb50d3312271212bb690eb3e06707441ceb35fab94b9ed7f834d</code></p><table><tr><th>Measurement</th><th>Before</th><th>After</th></tr>
+<tr><td>Verdict or condition</td><td>THEORETICAL</td><td>BLOCKED</td></tr>
+<tr><td>Blocking control</td><td>—</td><td>local policy evaluator: self-management permission</td></tr>
+<tr><td>reader_can_read_canary</td><td>True</td><td>True</td></tr><tr><td>approved_principal_is_trusted</td><td>True</td><td>True</td></tr><tr><td>instance_keeps_role</td><td>True</td><td>True</td></tr></table>
+<details><summary>Request evidence and patch</summary><pre>{
+  "authorized_read": {
+    "actor": "arn:aws:iam::111111111111:user/analyst",
+    "backend": "memory",
+    "control": null,
+    "digest_match": true,
+    "expected_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+    "gate": "ALLOW",
+    "http_status": 200,
+    "method": "GET",
+    "observed_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+    "path": "/classroom/canary.txt",
+    "verdict": "PROVEN"
+  },
+  "control": null,
+  "decisions": {
+    "self-management permission": "ALLOW"
+  },
+  "mode": "lab",
+  "must_still_work": {
+    "approved_principal_is_trusted": true,
+    "instance_keeps_role": true,
+    "reader_can_read_canary": true
+  },
+  "observed": true,
+  "plan": {
+    "plan_hash": "e6f91ee47859bb50d3312271212bb690eb3e06707441ceb35fab94b9ed7f834d",
+    "steps": [
+      {
+        "actor": "arn:aws:iam::111111111111:user/student",
+        "operation": "check_self_management",
+        "scenario": "T3",
+        "target": "arn:aws:iam::111111111111:user/student"
+      }
+    ]
+  },
+  "snapshot_id": "424e045e367db6ac137e6053dc665a06bc1d4c29bb3a1fe907ad43429311f776",
+  "state": "present",
+  "step_observations": [
+    {
+      "operation": "check_self_management",
+      "state": "present"
+    }
+  ],
+  "verdict": "THEORETICAL"
+}
+{
+  "changed": true,
+  "field": "identity",
+  "new": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Resource": "arn:aws:iam::111111111111:role/records",
+      "Sid": "TrustCandidate"
+    }
+  ],
+  "old": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Resource": "arn:aws:iam::111111111111:role/records",
+      "Sid": "TrustCandidate"
+    },
+    {
+      "Action": "iam:PutUserPolicy",
+      "Effect": "Allow",
+      "Resource": "arn:aws:iam::111111111111:user/student",
+      "Sid": "SelfManagement"
+    }
+  ]
+}
+{
+  "authorized_read": {
+    "actor": "arn:aws:iam::111111111111:user/analyst",
+    "backend": "memory",
+    "control": null,
+    "digest_match": true,
+    "expected_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+    "gate": "ALLOW",
+    "http_status": 200,
+    "method": "GET",
+    "observed_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+    "path": "/classroom/canary.txt",
+    "verdict": "PROVEN"
+  },
+  "control": "local policy evaluator: self-management permission",
+  "decisions": {
+    "self-management permission": "IMPLICIT_DENY"
+  },
+  "mode": "lab",
+  "must_still_work": {
+    "approved_principal_is_trusted": true,
+    "instance_keeps_role": true,
+    "reader_can_read_canary": true
+  },
+  "observed": false,
+  "plan": {
+    "plan_hash": "e6f91ee47859bb50d3312271212bb690eb3e06707441ceb35fab94b9ed7f834d",
+    "steps": [
+      {
+        "actor": "arn:aws:iam::111111111111:user/student",
+        "operation": "check_self_management",
+        "scenario": "T3",
+        "target": "arn:aws:iam::111111111111:user/student"
+      }
+    ]
+  },
+  "snapshot_id": "28dce023b0908bb6fcc101265723a37ea27aba68f49c73b2f95da0afc4059461",
+  "state": "absent",
+  "step_observations": [
+    {
+      "operation": "check_self_management",
+      "state": "absent"
+    }
+  ],
+  "verdict": "BLOCKED"
+}</pre></details>
+<h3>Before</h3><p>Graph engine: stdlib rehearsal · Scope: classroom fixtures</p>
+<svg viewBox="0 0 640 325" role="img" aria-label="Inventory relationships"><circle cx="521.7" cy="80.7" r="13" fill="none" stroke="teal"><title>arn:aws:iam::111111111111:user/student → arn:aws:iam::111111111111:user/student · can_modify_policy</title></circle><g stroke="teal"><title>i-classroom → arn:aws:iam::111111111111:role/records · exposes_credentials</title><line x1="90.89194063727146" y1="184.03226086728196" x2="401.4588379704808" y2="252.7667400218672"/><polygon points="401.5,252.8 390.6,255.5 392.8,245.7" fill="teal"/></g><g stroke="teal"><title>Internet → i-classroom · public_ingress_configured</title><line x1="320.0" y1="52.0" x2="109.08683633499274" y2="173.5467579919286"/><polygon points="109.1,173.5 115.3,164.2 120.2,172.9" fill="teal"/></g><g stroke="teal"><title>arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · can_read</title><line x1="421.9626786926262" y1="257.3046377334613" x2="239.03732130737387" y2="257.3046377334613"/><polygon points="239.0,257.3 249.0,252.3 249.0,262.3" fill="teal"/></g><circle cx="320.0" cy="52.0" r="8" fill="teal"/><text x="320.0" y="76.0" text-anchor="middle" font-size="13">Internet</text><circle cx="503.73039837998704" cy="92.66310139925679" r="8" fill="teal"/><text x="503.73039837998704" y="116.66310139925679" text-anchor="middle" font-size="13">student</text><circle cx="549.1080593627286" cy="184.03226086728196" r="8" fill="teal"/><text x="549.1080593627286" y="208.03226086728196" text-anchor="middle" font-size="13">analyst</text><circle cx="421.9626786926262" cy="257.3046377334613" r="8" fill="teal"/><text x="421.9626786926262" y="281.3046377334613" text-anchor="middle" font-size="13">records</text><circle cx="218.03732130737387" cy="257.3046377334613" r="8" fill="teal"/><text x="218.03732130737387" y="281.3046377334613" text-anchor="middle" font-size="13">pathproof-classroom</text><circle cx="90.89194063727146" cy="184.03226086728196" r="8" fill="teal"/><text x="90.89194063727146" y="208.03226086728196" text-anchor="middle" font-size="13">i-classroom</text><circle cx="136.26960162001296" cy="92.66310139925679" r="8" fill="teal"/><text x="136.26960162001296" y="116.66310139925679" text-anchor="middle" font-size="13">db-classroom</text></svg>
+<table><tr><th>Source</th><th>Relationship</th><th>Target</th><th>Evidence</th></tr><tr><td>arn:aws:iam::111111111111:user/student</td><td>can_modify_policy</td><td>arn:aws:iam::111111111111:user/student</td><td>self-management permission</td></tr><tr><td>i-classroom</td><td>exposes_credentials</td><td>arn:aws:iam::111111111111:role/records</td><td>metadata setting and attached role</td></tr><tr><td>Internet</td><td>public_ingress_configured</td><td>i-classroom</td><td>modeled ingress</td></tr><tr><td>arn:aws:iam::111111111111:role/records</td><td>can_read</td><td>arn:aws:s3:::pathproof-classroom</td><td>role grant scoped to registered canary</td></tr></table>
+<details><summary>Internet → arn:aws:s3:::pathproof-classroom · 1 modeled routes</summary><p>Internet → i-classroom → arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · score 4.0 to 4.0</p></details><details><summary>Internet → db-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details><details><summary>arn:aws:iam::111111111111:user/student → arn:aws:s3:::pathproof-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details><details><summary>arn:aws:iam::111111111111:user/student → db-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details><h3>After</h3><p>Graph engine: stdlib rehearsal · Scope: classroom fixtures</p>
+<svg viewBox="0 0 640 325" role="img" aria-label="Inventory relationships"><g stroke="teal"><title>i-classroom → arn:aws:iam::111111111111:role/records · exposes_credentials</title><line x1="90.89194063727146" y1="184.03226086728196" x2="401.4588379704808" y2="252.7667400218672"/><polygon points="401.5,252.8 390.6,255.5 392.8,245.7" fill="teal"/></g><g stroke="teal"><title>Internet → i-classroom · public_ingress_configured</title><line x1="320.0" y1="52.0" x2="109.08683633499274" y2="173.5467579919286"/><polygon points="109.1,173.5 115.3,164.2 120.2,172.9" fill="teal"/></g><g stroke="teal"><title>arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · can_read</title><line x1="421.9626786926262" y1="257.3046377334613" x2="239.03732130737387" y2="257.3046377334613"/><polygon points="239.0,257.3 249.0,252.3 249.0,262.3" fill="teal"/></g><circle cx="320.0" cy="52.0" r="8" fill="teal"/><text x="320.0" y="76.0" text-anchor="middle" font-size="13">Internet</text><circle cx="503.73039837998704" cy="92.66310139925679" r="8" fill="teal"/><text x="503.73039837998704" y="116.66310139925679" text-anchor="middle" font-size="13">student</text><circle cx="549.1080593627286" cy="184.03226086728196" r="8" fill="teal"/><text x="549.1080593627286" y="208.03226086728196" text-anchor="middle" font-size="13">analyst</text><circle cx="421.9626786926262" cy="257.3046377334613" r="8" fill="teal"/><text x="421.9626786926262" y="281.3046377334613" text-anchor="middle" font-size="13">records</text><circle cx="218.03732130737387" cy="257.3046377334613" r="8" fill="teal"/><text x="218.03732130737387" y="281.3046377334613" text-anchor="middle" font-size="13">pathproof-classroom</text><circle cx="90.89194063727146" cy="184.03226086728196" r="8" fill="teal"/><text x="90.89194063727146" y="208.03226086728196" text-anchor="middle" font-size="13">i-classroom</text><circle cx="136.26960162001296" cy="92.66310139925679" r="8" fill="teal"/><text x="136.26960162001296" y="116.66310139925679" text-anchor="middle" font-size="13">db-classroom</text></svg>
+<table><tr><th>Source</th><th>Relationship</th><th>Target</th><th>Evidence</th></tr><tr><td>i-classroom</td><td>exposes_credentials</td><td>arn:aws:iam::111111111111:role/records</td><td>metadata setting and attached role</td></tr><tr><td>Internet</td><td>public_ingress_configured</td><td>i-classroom</td><td>modeled ingress</td></tr><tr><td>arn:aws:iam::111111111111:role/records</td><td>can_read</td><td>arn:aws:s3:::pathproof-classroom</td><td>role grant scoped to registered canary</td></tr></table>
+<details><summary>Internet → arn:aws:s3:::pathproof-classroom · 1 modeled routes</summary><p>Internet → i-classroom → arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · score 4.0 to 4.0</p></details><details><summary>Internet → db-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details><details><summary>arn:aws:iam::111111111111:user/student → arn:aws:s3:::pathproof-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details><details><summary>arn:aws:iam::111111111111:user/student → db-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details></details><details ><summary>T4 · verified</summary>
+<p>Saved request <code>26ec2dcc709eb65561687cc55d1f3d9687272daf5f579baa1dc47642beb46672</code></p><table><tr><th>Measurement</th><th>Before</th><th>After</th></tr>
+<tr><td>Verdict or condition</td><td>THEORETICAL</td><td>absent</td></tr>
+<tr><td>Blocking control</td><td>—</td><td>—</td></tr>
+<tr><td>reader_can_read_canary</td><td>True</td><td>True</td></tr><tr><td>approved_principal_is_trusted</td><td>True</td><td>True</td></tr><tr><td>instance_keeps_role</td><td>True</td><td>True</td></tr></table>
+<details><summary>Request evidence and patch</summary><pre>{
+  "authorized_read": {
+    "actor": "arn:aws:iam::111111111111:user/analyst",
+    "backend": "memory",
+    "control": null,
+    "digest_match": true,
+    "expected_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+    "gate": "ALLOW",
+    "http_status": 200,
+    "method": "GET",
+    "observed_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+    "path": "/classroom/canary.txt",
+    "verdict": "PROVEN"
+  },
+  "control": null,
+  "mode": "lab",
+  "must_still_work": {
+    "approved_principal_is_trusted": true,
+    "instance_keeps_role": true,
+    "reader_can_read_canary": true
+  },
+  "observed": true,
+  "plan": {
+    "plan_hash": "26ec2dcc709eb65561687cc55d1f3d9687272daf5f579baa1dc47642beb46672",
+    "steps": [
+      {
+        "actor": "Internet",
+        "operation": "inspect_instance",
+        "scenario": "T4",
+        "target": "i-classroom"
+      },
+      {
+        "actor": "arn:aws:iam::111111111111:role/records",
+        "operation": "inspect_role_canary_grant",
+        "scenario": "T4",
+        "target": "arn:aws:s3:::pathproof-classroom/canary.txt"
+      }
+    ]
+  },
+  "snapshot_id": "28dce023b0908bb6fcc101265723a37ea27aba68f49c73b2f95da0afc4059461",
+  "state": "present",
+  "step_observations": [
+    {
+      "operation": "inspect_instance",
+      "state": "present"
+    },
+    {
+      "operation": "inspect_role_canary_grant",
+      "state": "supported_by_fixture"
+    }
+  ],
+  "verdict": "THEORETICAL"
+}
+{
+  "changed": true,
+  "field": "tokens",
+  "new": "required",
+  "old": "optional"
+}
+{
+  "authorized_read": {
+    "actor": "arn:aws:iam::111111111111:user/analyst",
+    "backend": "memory",
+    "control": null,
+    "digest_match": true,
+    "expected_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+    "gate": "ALLOW",
+    "http_status": 200,
+    "method": "GET",
+    "observed_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+    "path": "/classroom/canary.txt",
+    "verdict": "PROVEN"
+  },
+  "control": null,
+  "mode": "lab",
+  "must_still_work": {
+    "approved_principal_is_trusted": true,
+    "instance_keeps_role": true,
+    "reader_can_read_canary": true
+  },
+  "observed": false,
+  "plan": {
+    "plan_hash": "26ec2dcc709eb65561687cc55d1f3d9687272daf5f579baa1dc47642beb46672",
+    "steps": [
+      {
+        "actor": "Internet",
+        "operation": "inspect_instance",
+        "scenario": "T4",
+        "target": "i-classroom"
+      },
+      {
+        "actor": "arn:aws:iam::111111111111:role/records",
+        "operation": "inspect_role_canary_grant",
+        "scenario": "T4",
+        "target": "arn:aws:s3:::pathproof-classroom/canary.txt"
+      }
+    ]
+  },
+  "snapshot_id": "d102f93125d4b18243620fbeda6218dfc7829f1a0539375d08f0f696f7b7923c",
+  "state": "absent",
+  "step_observations": [
+    {
+      "operation": "inspect_instance",
+      "state": "absent"
+    },
+    {
+      "operation": "inspect_role_canary_grant",
+      "state": "not_reached"
+    }
+  ],
+  "verdict": null
+}</pre></details>
+<h3>Before</h3><p>Graph engine: stdlib rehearsal · Scope: classroom fixtures</p>
+<svg viewBox="0 0 640 325" role="img" aria-label="Inventory relationships"><g stroke="teal"><title>i-classroom → arn:aws:iam::111111111111:role/records · exposes_credentials</title><line x1="90.89194063727146" y1="184.03226086728196" x2="401.4588379704808" y2="252.7667400218672"/><polygon points="401.5,252.8 390.6,255.5 392.8,245.7" fill="teal"/></g><g stroke="teal"><title>Internet → i-classroom · public_ingress_configured</title><line x1="320.0" y1="52.0" x2="109.08683633499274" y2="173.5467579919286"/><polygon points="109.1,173.5 115.3,164.2 120.2,172.9" fill="teal"/></g><g stroke="teal"><title>arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · can_read</title><line x1="421.9626786926262" y1="257.3046377334613" x2="239.03732130737387" y2="257.3046377334613"/><polygon points="239.0,257.3 249.0,252.3 249.0,262.3" fill="teal"/></g><circle cx="320.0" cy="52.0" r="8" fill="teal"/><text x="320.0" y="76.0" text-anchor="middle" font-size="13">Internet</text><circle cx="503.73039837998704" cy="92.66310139925679" r="8" fill="teal"/><text x="503.73039837998704" y="116.66310139925679" text-anchor="middle" font-size="13">student</text><circle cx="549.1080593627286" cy="184.03226086728196" r="8" fill="teal"/><text x="549.1080593627286" y="208.03226086728196" text-anchor="middle" font-size="13">analyst</text><circle cx="421.9626786926262" cy="257.3046377334613" r="8" fill="teal"/><text x="421.9626786926262" y="281.3046377334613" text-anchor="middle" font-size="13">records</text><circle cx="218.03732130737387" cy="257.3046377334613" r="8" fill="teal"/><text x="218.03732130737387" y="281.3046377334613" text-anchor="middle" font-size="13">pathproof-classroom</text><circle cx="90.89194063727146" cy="184.03226086728196" r="8" fill="teal"/><text x="90.89194063727146" y="208.03226086728196" text-anchor="middle" font-size="13">i-classroom</text><circle cx="136.26960162001296" cy="92.66310139925679" r="8" fill="teal"/><text x="136.26960162001296" y="116.66310139925679" text-anchor="middle" font-size="13">db-classroom</text></svg>
+<table><tr><th>Source</th><th>Relationship</th><th>Target</th><th>Evidence</th></tr><tr><td>i-classroom</td><td>exposes_credentials</td><td>arn:aws:iam::111111111111:role/records</td><td>metadata setting and attached role</td></tr><tr><td>Internet</td><td>public_ingress_configured</td><td>i-classroom</td><td>modeled ingress</td></tr><tr><td>arn:aws:iam::111111111111:role/records</td><td>can_read</td><td>arn:aws:s3:::pathproof-classroom</td><td>role grant scoped to registered canary</td></tr></table>
+<details><summary>Internet → arn:aws:s3:::pathproof-classroom · 1 modeled routes</summary><p>Internet → i-classroom → arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · score 4.0 to 4.0</p></details><details><summary>Internet → db-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details><details><summary>arn:aws:iam::111111111111:user/student → arn:aws:s3:::pathproof-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details><details><summary>arn:aws:iam::111111111111:user/student → db-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details><h3>After</h3><p>Graph engine: stdlib rehearsal · Scope: classroom fixtures</p>
+<svg viewBox="0 0 640 325" role="img" aria-label="Inventory relationships"><g stroke="teal"><title>arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · can_read</title><line x1="421.9626786926262" y1="257.3046377334613" x2="239.03732130737387" y2="257.3046377334613"/><polygon points="239.0,257.3 249.0,252.3 249.0,262.3" fill="teal"/></g><circle cx="320.0" cy="52.0" r="8" fill="teal"/><text x="320.0" y="76.0" text-anchor="middle" font-size="13">Internet</text><circle cx="503.73039837998704" cy="92.66310139925679" r="8" fill="teal"/><text x="503.73039837998704" y="116.66310139925679" text-anchor="middle" font-size="13">student</text><circle cx="549.1080593627286" cy="184.03226086728196" r="8" fill="teal"/><text x="549.1080593627286" y="208.03226086728196" text-anchor="middle" font-size="13">analyst</text><circle cx="421.9626786926262" cy="257.3046377334613" r="8" fill="teal"/><text x="421.9626786926262" y="281.3046377334613" text-anchor="middle" font-size="13">records</text><circle cx="218.03732130737387" cy="257.3046377334613" r="8" fill="teal"/><text x="218.03732130737387" y="281.3046377334613" text-anchor="middle" font-size="13">pathproof-classroom</text><circle cx="90.89194063727146" cy="184.03226086728196" r="8" fill="teal"/><text x="90.89194063727146" y="208.03226086728196" text-anchor="middle" font-size="13">i-classroom</text><circle cx="136.26960162001296" cy="92.66310139925679" r="8" fill="teal"/><text x="136.26960162001296" y="116.66310139925679" text-anchor="middle" font-size="13">db-classroom</text></svg>
+<table><tr><th>Source</th><th>Relationship</th><th>Target</th><th>Evidence</th></tr><tr><td>arn:aws:iam::111111111111:role/records</td><td>can_read</td><td>arn:aws:s3:::pathproof-classroom</td><td>role grant scoped to registered canary</td></tr></table>
+<details><summary>Internet → arn:aws:s3:::pathproof-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details><details><summary>Internet → db-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details><details><summary>arn:aws:iam::111111111111:user/student → arn:aws:s3:::pathproof-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details><details><summary>arn:aws:iam::111111111111:user/student → db-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details></details></section>
+<section><h2>Inventory graph</h2><p>Graph engine: stdlib rehearsal · Scope: classroom fixtures</p>
+<svg viewBox="0 0 640 325" role="img" aria-label="Inventory relationships"><g stroke="teal"><title>Internet → arn:aws:s3:::pathproof-classroom · can_read</title><line x1="320.0" y1="52.0" x2="227.37822988025425" y2="238.4964632597626"/><polygon points="227.4,238.5 227.3,227.3 236.3,231.8" fill="teal"/></g><g stroke="teal"><title>arn:aws:iam::111111111111:user/student → arn:aws:iam::111111111111:role/records · can_assume</title><line x1="503.73039837998704" y1="92.66310139925679" x2="431.30358726550656" y2="238.4964632597626"/><polygon points="431.3,238.5 431.3,227.3 440.2,231.8" fill="teal"/></g><circle cx="521.7" cy="80.7" r="13" fill="none" stroke="teal"><title>arn:aws:iam::111111111111:user/student → arn:aws:iam::111111111111:user/student · can_modify_policy</title></circle><g stroke="teal"><title>i-classroom → arn:aws:iam::111111111111:role/records · exposes_credentials</title><line x1="90.89194063727146" y1="184.03226086728196" x2="401.4588379704808" y2="252.7667400218672"/><polygon points="401.5,252.8 390.6,255.5 392.8,245.7" fill="teal"/></g><g stroke="teal"><title>Internet → i-classroom · public_ingress_configured</title><line x1="320.0" y1="52.0" x2="109.08683633499274" y2="173.5467579919286"/><polygon points="109.1,173.5 115.3,164.2 120.2,172.9" fill="teal"/></g><g stroke="teal"><title>arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · can_read</title><line x1="421.9626786926262" y1="257.3046377334613" x2="239.03732130737387" y2="257.3046377334613"/><polygon points="239.0,257.3 249.0,252.3 249.0,262.3" fill="teal"/></g><circle cx="320.0" cy="52.0" r="8" fill="teal"/><text x="320.0" y="76.0" text-anchor="middle" font-size="13">Internet</text><circle cx="503.73039837998704" cy="92.66310139925679" r="8" fill="teal"/><text x="503.73039837998704" y="116.66310139925679" text-anchor="middle" font-size="13">student</text><circle cx="549.1080593627286" cy="184.03226086728196" r="8" fill="teal"/><text x="549.1080593627286" y="208.03226086728196" text-anchor="middle" font-size="13">analyst</text><circle cx="421.9626786926262" cy="257.3046377334613" r="8" fill="teal"/><text x="421.9626786926262" y="281.3046377334613" text-anchor="middle" font-size="13">records</text><circle cx="218.03732130737387" cy="257.3046377334613" r="8" fill="teal"/><text x="218.03732130737387" y="281.3046377334613" text-anchor="middle" font-size="13">pathproof-classroom</text><circle cx="90.89194063727146" cy="184.03226086728196" r="8" fill="teal"/><text x="90.89194063727146" y="208.03226086728196" text-anchor="middle" font-size="13">i-classroom</text><circle cx="136.26960162001296" cy="92.66310139925679" r="8" fill="teal"/><text x="136.26960162001296" y="116.66310139925679" text-anchor="middle" font-size="13">db-classroom</text></svg>
+<table><tr><th>Source</th><th>Relationship</th><th>Target</th><th>Evidence</th></tr><tr><td>Internet</td><td>can_read</td><td>arn:aws:s3:::pathproof-classroom</td><td>registered canary policy</td></tr><tr><td>arn:aws:iam::111111111111:user/student</td><td>can_assume</td><td>arn:aws:iam::111111111111:role/records</td><td>caller policy and target trust</td></tr><tr><td>arn:aws:iam::111111111111:user/student</td><td>can_modify_policy</td><td>arn:aws:iam::111111111111:user/student</td><td>self-management permission</td></tr><tr><td>i-classroom</td><td>exposes_credentials</td><td>arn:aws:iam::111111111111:role/records</td><td>metadata setting and attached role</td></tr><tr><td>Internet</td><td>public_ingress_configured</td><td>i-classroom</td><td>modeled ingress</td></tr><tr><td>arn:aws:iam::111111111111:role/records</td><td>can_read</td><td>arn:aws:s3:::pathproof-classroom</td><td>role grant scoped to registered canary</td></tr></table>
+<details><summary>Internet → arn:aws:s3:::pathproof-classroom · 2 modeled routes</summary><p>Internet → arn:aws:s3:::pathproof-classroom · score 30.0 to 30.0</p><p>Internet → i-classroom → arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · score 6.0 to 6.0</p></details><details><summary>Internet → db-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details><details><summary>arn:aws:iam::111111111111:user/student → arn:aws:s3:::pathproof-classroom · 1 modeled routes</summary><p>arn:aws:iam::111111111111:user/student → arn:aws:iam::111111111111:role/records → arn:aws:s3:::pathproof-classroom · score 18.0 to 18.0</p></details><details><summary>arn:aws:iam::111111111111:user/student → db-classroom · 0 modeled routes</summary><p>No route established in this model.</p></details></section>
+<section><h2>Findings</h2><p>32 visible of 32. The JSON file retains all rows.</p><table><tr><th>Check</th><th>Status</th><th>Severity</th><th>Resource</th><th>Fact</th></tr><tr><td>CT01</td><td class="PASS">PASS</td><td>HIGH</td><td>trails/us-east-1</td><td>{&#39;field&#39;: &#39;logging&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/10/facts/logging&#39;}</td></tr><tr><td>CT02</td><td class="FAIL">FAIL</td><td>HIGH</td><td>trails/us-east-1</td><td>{&#39;field&#39;: &#39;multi_mgmt&#39;, &#39;observed&#39;: False, &#39;pointer&#39;: &#39;/inventory/resources/10/facts/multi_mgmt&#39;}</td></tr><tr><td>CT03</td><td class="PASS">PASS</td><td>MEDIUM</td><td>trail-classroom</td><td>{&#39;field&#39;: &#39;validation&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/11/facts/validation&#39;}</td></tr><tr><td>CT04</td><td class="PASS">PASS</td><td>MEDIUM</td><td>trail-classroom</td><td>{&#39;field&#39;: &#39;kms&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/11/facts/kms&#39;}</td></tr><tr><td>EC201</td><td class="PASS">PASS</td><td>HIGH</td><td>web-sg</td><td>{&#39;field&#39;: &#39;ipv4_admin&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/6/facts/ipv4_admin&#39;}</td></tr><tr><td>EC202</td><td class="PASS">PASS</td><td>HIGH</td><td>web-sg</td><td>{&#39;field&#39;: &#39;ipv6_admin&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/6/facts/ipv6_admin&#39;}</td></tr><tr><td>EC203</td><td class="PASS">PASS</td><td>HIGH</td><td>default-sg</td><td>{&#39;field&#39;: &#39;empty&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/7/facts/empty&#39;}</td></tr><tr><td>EC204</td><td class="FAIL">FAIL</td><td>HIGH</td><td>i-classroom</td><td>{&#39;field&#39;: &#39;imds_safe&#39;, &#39;observed&#39;: False, &#39;pointer&#39;: &#39;/inventory/resources/5/facts/imds_safe&#39;}</td></tr><tr><td>EC205</td><td class="PASS">PASS</td><td>MEDIUM</td><td>ec2/us-east-1</td><td>{&#39;field&#39;: &#39;ebs_default&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/8/facts/ebs_default&#39;}</td></tr><tr><td>EC206</td><td class="PASS">PASS</td><td>MEDIUM</td><td>vol-classroom</td><td>{&#39;field&#39;: &#39;encrypted&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/9/facts/encrypted&#39;}</td></tr><tr><td>IAM01</td><td class="PASS">PASS</td><td>HIGH</td><td>classroom</td><td>{&#39;field&#39;: &#39;root_mfa&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/0/facts/root_mfa&#39;}</td></tr><tr><td>IAM02</td><td class="PASS">PASS</td><td>CRITICAL</td><td>classroom</td><td>{&#39;field&#39;: &#39;no_root_key&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/0/facts/no_root_key&#39;}</td></tr><tr><td>IAM03</td><td class="PASS">PASS</td><td>HIGH</td><td>arn:aws:iam::111111111111:user/analyst</td><td>{&#39;field&#39;: &#39;console_mfa&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/2/facts/console_mfa&#39;}</td></tr><tr><td>IAM03</td><td class="PASS">PASS</td><td>HIGH</td><td>arn:aws:iam::111111111111:user/student</td><td>{&#39;field&#39;: &#39;console_mfa&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/1/facts/console_mfa&#39;}</td></tr><tr><td>IAM04</td><td class="PASS">PASS</td><td>MEDIUM</td><td>classroom</td><td>{&#39;field&#39;: &#39;password_length&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/0/facts/password_length&#39;}</td></tr><tr><td>IAM05</td><td class="PASS">PASS</td><td>MEDIUM</td><td>classroom</td><td>{&#39;field&#39;: &#39;password_reuse&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/0/facts/password_reuse&#39;}</td></tr><tr><td>IAM06</td><td class="FAIL">FAIL</td><td>HIGH</td><td>arn:aws:iam::111111111111:role/records</td><td>{&#39;field&#39;: &#39;trust_scoped&#39;, &#39;observed&#39;: False, &#39;pointer&#39;: &#39;/inventory/resources/3/facts/trust_scoped&#39;}</td></tr><tr><td>IAM07</td><td class="PASS">PASS</td><td>HIGH</td><td>arn:aws:iam::111111111111:user/analyst</td><td>{&#39;field&#39;: &#39;self_scoped&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/2/facts/self_scoped&#39;}</td></tr><tr><td>IAM07</td><td class="FAIL">FAIL</td><td>HIGH</td><td>arn:aws:iam::111111111111:user/student</td><td>{&#39;field&#39;: &#39;self_scoped&#39;, &#39;observed&#39;: False, &#39;pointer&#39;: &#39;/inventory/resources/1/facts/self_scoped&#39;}</td></tr><tr><td>KMS01</td><td class="PASS">PASS</td><td>MEDIUM</td><td>rotation/key-classroom</td><td>{&#39;field&#39;: &#39;rotation&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/13/facts/rotation&#39;}</td></tr><tr><td>KMS02</td><td class="PASS">PASS</td><td>MEDIUM</td><td>key-classroom</td><td>{&#39;field&#39;: &#39;enabled&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/12/facts/enabled&#39;}</td></tr><tr><td>KMS03</td><td class="PASS">PASS</td><td>HIGH</td><td>key-classroom</td><td>{&#39;field&#39;: &#39;no_deletion&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/12/facts/no_deletion&#39;}</td></tr><tr><td>RDS01</td><td class="PASS">PASS</td><td>HIGH</td><td>db-classroom</td><td>{&#39;field&#39;: &#39;encrypted&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/14/facts/encrypted&#39;}</td></tr><tr><td>RDS02</td><td class="PASS">PASS</td><td>HIGH</td><td>db-classroom</td><td>{&#39;field&#39;: &#39;private&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/14/facts/private&#39;}</td></tr><tr><td>RDS03</td><td class="PASS">PASS</td><td>MEDIUM</td><td>db-classroom</td><td>{&#39;field&#39;: &#39;minor_upgrade&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/14/facts/minor_upgrade&#39;}</td></tr><tr><td>RDS04</td><td class="PASS">PASS</td><td>MEDIUM</td><td>db-classroom</td><td>{&#39;field&#39;: &#39;backups&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/14/facts/backups&#39;}</td></tr><tr><td>RDS05</td><td class="PASS">PASS</td><td>MEDIUM</td><td>db-classroom</td><td>{&#39;field&#39;: &#39;deletion_protection&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/14/facts/deletion_protection&#39;}</td></tr><tr><td>S301</td><td class="FAIL">FAIL</td><td>HIGH</td><td>classroom</td><td>{&#39;field&#39;: &#39;account_bpa&#39;, &#39;observed&#39;: False, &#39;pointer&#39;: &#39;/inventory/resources/0/facts/account_bpa&#39;}</td></tr><tr><td>S302</td><td class="FAIL">FAIL</td><td>HIGH</td><td>arn:aws:s3:::pathproof-classroom</td><td>{&#39;field&#39;: &#39;bucket_bpa&#39;, &#39;observed&#39;: False, &#39;pointer&#39;: &#39;/inventory/resources/4/facts/bucket_bpa&#39;}</td></tr><tr><td>S303</td><td class="FAIL">FAIL</td><td>CRITICAL</td><td>arn:aws:s3:::pathproof-classroom</td><td>{&#39;field&#39;: &#39;private_canary&#39;, &#39;observed&#39;: False, &#39;pointer&#39;: &#39;/inventory/resources/4/facts/private_canary&#39;}</td></tr><tr><td>S304</td><td class="PASS">PASS</td><td>MEDIUM</td><td>arn:aws:s3:::pathproof-classroom</td><td>{&#39;field&#39;: &#39;versioning&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/4/facts/versioning&#39;}</td></tr><tr><td>S305</td><td class="PASS">PASS</td><td>LOW</td><td>arn:aws:s3:::pathproof-classroom</td><td>{&#39;field&#39;: &#39;access_logging&#39;, &#39;observed&#39;: True, &#39;pointer&#39;: &#39;/inventory/resources/4/facts/access_logging&#39;}</td></tr></table></section>
+<section><h2>CIS evidence within tested scope</h2><table><tr><th>Control</th><th>Subset result</th><th>Observations</th></tr><tr><td>CIS AWS Foundations 3.0.0/1.10</td><td>PASS</td><td>{&#39;PASS&#39;: 2}</td></tr><tr><td>CIS AWS Foundations 3.0.0/1.4</td><td>PASS</td><td>{&#39;PASS&#39;: 1}</td></tr><tr><td>CIS AWS Foundations 3.0.0/1.5</td><td>PASS</td><td>{&#39;PASS&#39;: 1}</td></tr><tr><td>CIS AWS Foundations 3.0.0/1.8</td><td>PASS</td><td>{&#39;PASS&#39;: 1}</td></tr><tr><td>CIS AWS Foundations 3.0.0/1.9</td><td>PASS</td><td>{&#39;PASS&#39;: 1}</td></tr><tr><td>CIS AWS Foundations 3.0.0/2.1.4</td><td>FAIL</td><td>{&#39;FAIL&#39;: 2}</td></tr><tr><td>CIS AWS Foundations 3.0.0/2.2.1</td><td>PASS</td><td>{&#39;PASS&#39;: 1}</td></tr><tr><td>CIS AWS Foundations 3.0.0/2.3.1</td><td>PASS</td><td>{&#39;PASS&#39;: 1}</td></tr><tr><td>CIS AWS Foundations 3.0.0/2.3.2</td><td>PASS</td><td>{&#39;PASS&#39;: 1}</td></tr><tr><td>CIS AWS Foundations 3.0.0/2.3.3</td><td>PASS</td><td>{&#39;PASS&#39;: 1}</td></tr><tr><td>CIS AWS Foundations 3.0.0/3.1</td><td>FAIL</td><td>{&#39;FAIL&#39;: 1}</td></tr><tr><td>CIS AWS Foundations 3.0.0/3.2</td><td>PASS</td><td>{&#39;PASS&#39;: 1}</td></tr><tr><td>CIS AWS Foundations 3.0.0/3.5</td><td>PASS</td><td>{&#39;PASS&#39;: 1}</td></tr><tr><td>CIS AWS Foundations 3.0.0/3.6</td><td>PASS</td><td>{&#39;PASS&#39;: 1}</td></tr><tr><td>CIS AWS Foundations 3.0.0/5.2</td><td>PASS</td><td>{&#39;PASS&#39;: 1}</td></tr><tr><td>CIS AWS Foundations 3.0.0/5.3</td><td>PASS</td><td>{&#39;PASS&#39;: 1}</td></tr><tr><td>CIS AWS Foundations 3.0.0/5.4</td><td>PASS</td><td>{&#39;PASS&#39;: 1}</td></tr><tr><td>CIS AWS Foundations 3.0.0/5.6</td><td>FAIL</td><td>{&#39;FAIL&#39;: 1}</td></tr></table></section>
+<section><h2>Collection coverage</h2><table><tr><th>Service</th><th>Scope</th><th>Operation</th><th>Outcome</th></tr><tr><td>iam</td><td>classroom</td><td>seed</td><td>complete</td></tr><tr><td>s3</td><td>classroom</td><td>seed</td><td>complete</td></tr><tr><td>ec2</td><td>classroom</td><td>seed</td><td>complete</td></tr><tr><td>cloudtrail</td><td>classroom</td><td>seed</td><td>complete</td></tr><tr><td>kms</td><td>classroom</td><td>seed</td><td>complete</td></tr><tr><td>rds</td><td>classroom</td><td>seed</td><td>complete</td></tr></table></section>
+</html>
