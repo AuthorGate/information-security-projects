@@ -26,7 +26,7 @@ xdg-open first-demo/report.html
 
 A named output directory must be new. Omit --out for a unique run directory. The commands below assume the environment is active. Use `source .venv/bin/activate` in Bash or `.\.venv\Scripts\Activate.ps1` in PowerShell. You can also use the full executable paths above.
 
-## Live teacher exercise
+## run local demo
 
 ```text
 pathproof lab seed
