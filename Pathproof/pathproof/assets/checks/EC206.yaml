@@ -1,0 +1,8 @@
+id: "EC206"
+service: "ec2"
+kind: "volume"
+fact: "encrypted"
+description: "Volume encrypted"
+severity: "MEDIUM"
+remediation: "Migrate data to an encrypted volume."
+cis: null

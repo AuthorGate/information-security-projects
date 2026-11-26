@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pathproof"
+version = "1.0.0"
+requires-python = ">=3.11"
+dependencies = ["PyYAML==6.0.3", "networkx==3.4.2", "Jinja2==3.1.6", "boto3==1.40.24", "moto[server,s3]==5.1.11", "pyvis==0.3.2"]
+
+[project.optional-dependencies]
+test = ["pytest==8.4.2"]
+
+[project.scripts]
+pathproof = "pathproof.cli:entry"
+
+[tool.setuptools.packages.find]
+include = ["pathproof*"]
+
+[tool.setuptools.package-data]
+pathproof = ["assets/*.yaml","assets/*.html","assets/checks/*.yaml","assets/techniques/*.yaml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

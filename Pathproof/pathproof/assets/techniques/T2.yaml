@@ -1,0 +1,9 @@
+id: "T2"
+title: "Unintended role trust"
+mitre_attack_id: "T1078.004"
+mapping_status: "context"
+kind: "decision"
+preconditions: ["student_permission","role_trust"]
+effect: "can_assume"
+proof: "check_trust"
+fix: "trust"

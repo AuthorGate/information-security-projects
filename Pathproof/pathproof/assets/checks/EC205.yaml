@@ -1,0 +1,8 @@
+id: "EC205"
+service: "ec2"
+kind: "ec2_region"
+fact: "ebs_default"
+description: "Regional default EBS encryption enabled"
+severity: "MEDIUM"
+remediation: "Enable regional default EBS encryption."
+cis: "CIS AWS Foundations 3.0.0/2.2.1"

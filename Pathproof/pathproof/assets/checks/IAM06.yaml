@@ -1,0 +1,8 @@
+id: "IAM06"
+service: "iam"
+kind: "role"
+fact: "trust_scoped"
+description: "Named student lacks unintended trust"
+severity: "HIGH"
+remediation: "Remove the unapproved trust grant."
+cis: null

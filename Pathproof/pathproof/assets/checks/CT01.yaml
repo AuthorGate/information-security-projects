@@ -1,0 +1,8 @@
+id: "CT01"
+service: "cloudtrail"
+kind: "trail_scope"
+fact: "logging"
+description: "A trail is actively logging"
+severity: "HIGH"
+remediation: "Restore a logging trail."
+cis: null

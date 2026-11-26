@@ -1,0 +1,12 @@
+bucket: arn:aws:s3:::pathproof-classroom
+canary: canary.txt
+reader: arn:aws:iam::111111111111:user/analyst
+student: arn:aws:iam::111111111111:user/student
+role: arn:aws:iam::111111111111:role/records
+instance: i-classroom
+trail: trail-classroom
+database: db-classroom
+must_still_work:
+  - reader_can_read_canary
+  - approved_principal_is_trusted
+  - instance_keeps_role

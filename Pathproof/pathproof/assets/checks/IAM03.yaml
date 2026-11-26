@@ -1,0 +1,8 @@
+id: "IAM03"
+service: "iam"
+kind: "user"
+fact: "console_mfa"
+description: "Console login is absent or protected by MFA"
+severity: "HIGH"
+remediation: "Require MFA for console users."
+cis: "CIS AWS Foundations 3.0.0/1.10"

@@ -1,0 +1,8 @@
+id: "EC203"
+service: "ec2"
+kind: "default_sg"
+fact: "empty"
+description: "Default group has no ingress or egress rules"
+severity: "HIGH"
+remediation: "Remove rules from the default group after reviewing dependencies."
+cis: "CIS AWS Foundations 3.0.0/5.4"

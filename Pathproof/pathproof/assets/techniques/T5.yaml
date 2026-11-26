@@ -1,0 +1,9 @@
+id: "T5"
+title: "Detection coverage gap"
+mitre_attack_id: "T1685.002"
+mapping_status: "context"
+kind: "multiplier"
+preconditions: ["missing_active_multiregion"]
+effect: "detection_gap"
+proof: "inspect_trail"
+fix: "multi_region"

@@ -1,0 +1,8 @@
+id: "RDS03"
+service: "rds"
+kind: "database"
+fact: "minor_upgrade"
+description: "Automatic minor upgrades enabled"
+severity: "MEDIUM"
+remediation: "Enable automatic minor-version upgrades."
+cis: "CIS AWS Foundations 3.0.0/2.3.2"

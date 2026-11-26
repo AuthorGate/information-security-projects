@@ -1,0 +1,8 @@
+id: "S302"
+service: "s3"
+kind: "bucket"
+fact: "bucket_bpa"
+description: "Bucket has all four public-access blocks"
+severity: "HIGH"
+remediation: "Review and enable the bucket-level blocks."
+cis: "CIS AWS Foundations 3.0.0/2.1.4"

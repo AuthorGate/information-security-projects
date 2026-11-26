@@ -1,0 +1,8 @@
+id: "IAM04"
+service: "iam"
+kind: "account"
+fact: "password_length"
+description: "Password minimum is at least 14"
+severity: "MEDIUM"
+remediation: "Set the minimum to at least 14 characters."
+cis: "CIS AWS Foundations 3.0.0/1.8"

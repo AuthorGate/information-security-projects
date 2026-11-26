@@ -1,0 +1,8 @@
+id: "RDS05"
+service: "rds"
+kind: "database"
+fact: "deletion_protection"
+description: "Deletion protection enabled"
+severity: "MEDIUM"
+remediation: "Enable deletion protection."
+cis: null
