@@ -1,0 +1,8 @@
+id: "S301"
+service: "s3"
+kind: "account"
+fact: "account_bpa"
+description: "Account has all four public-access blocks"
+severity: "HIGH"
+remediation: "Review and enable the account-level blocks."
+cis: "CIS AWS Foundations 3.0.0/2.1.4"

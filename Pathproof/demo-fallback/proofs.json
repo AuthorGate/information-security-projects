@@ -1,0 +1,1802 @@
+[
+  {
+    "after": {
+      "authorized_read": {
+        "actor": "arn:aws:iam::111111111111:user/analyst",
+        "backend": "memory",
+        "control": null,
+        "digest_match": true,
+        "expected_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+        "gate": "ALLOW",
+        "http_status": 200,
+        "method": "GET",
+        "observed_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+        "path": "/classroom/canary.txt",
+        "verdict": "PROVEN"
+      },
+      "control": "canary bucket policy: IMPLICIT_DENY",
+      "evidence": {
+        "actor": "Internet",
+        "backend": "memory",
+        "control": "canary bucket policy: IMPLICIT_DENY",
+        "digest_match": null,
+        "gate": "IMPLICIT_DENY",
+        "http_status": 403,
+        "method": "GET",
+        "path": "/classroom/canary.txt",
+        "verdict": "BLOCKED"
+      },
+      "mode": "lab",
+      "must_still_work": {
+        "approved_principal_is_trusted": true,
+        "instance_keeps_role": true,
+        "reader_can_read_canary": true
+      },
+      "observed": false,
+      "plan": {
+        "plan_hash": "9b1317a34e3f48f1449dd204d038908bd52fa4de74e548d089b566d294a3eee4",
+        "steps": [
+          {
+            "actor": "Internet",
+            "operation": "read_registered_canary",
+            "scenario": "T1",
+            "target": "arn:aws:s3:::pathproof-classroom/canary.txt"
+          }
+        ]
+      },
+      "snapshot_id": "7132b51ef6295e2bfb4a1acb1c8b6f3060006622e145a0328006ebb64ce689b7",
+      "state": "absent",
+      "step_observations": [
+        {
+          "operation": "read_registered_canary",
+          "state": "absent"
+        }
+      ],
+      "verdict": "BLOCKED"
+    },
+    "after_graph": {
+      "conditions": {
+        "T1": false,
+        "T2": true,
+        "T3": true,
+        "T4": true,
+        "T5": true
+      },
+      "edges": [
+        {
+          "evidence": "caller policy and target trust",
+          "relation": "can_assume",
+          "source": "arn:aws:iam::111111111111:user/student",
+          "target": "arn:aws:iam::111111111111:role/records",
+          "technique": "T2"
+        },
+        {
+          "evidence": "self-management permission",
+          "relation": "can_modify_policy",
+          "source": "arn:aws:iam::111111111111:user/student",
+          "target": "arn:aws:iam::111111111111:user/student",
+          "technique": "T3"
+        },
+        {
+          "evidence": "metadata setting and attached role",
+          "relation": "exposes_credentials",
+          "source": "i-classroom",
+          "target": "arn:aws:iam::111111111111:role/records",
+          "technique": "T4"
+        },
+        {
+          "evidence": "modeled ingress",
+          "relation": "public_ingress_configured",
+          "source": "Internet",
+          "target": "i-classroom",
+          "technique": "T4"
+        },
+        {
+          "evidence": "role grant scoped to registered canary",
+          "relation": "can_read",
+          "source": "arn:aws:iam::111111111111:role/records",
+          "target": "arn:aws:s3:::pathproof-classroom",
+          "technique": ""
+        }
+      ],
+      "engine": "stdlib rehearsal",
+      "nodes": [
+        {
+          "id": "Internet",
+          "type": "origin"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:user/student",
+          "type": "user"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:user/analyst",
+          "type": "user"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:role/records",
+          "type": "role"
+        },
+        {
+          "id": "arn:aws:s3:::pathproof-classroom",
+          "type": "bucket"
+        },
+        {
+          "id": "i-classroom",
+          "type": "instance"
+        },
+        {
+          "id": "db-classroom",
+          "type": "database"
+        }
+      ],
+      "pairs": [
+        {
+          "goal": "arn:aws:s3:::pathproof-classroom",
+          "paths": [
+            {
+              "nodes": [
+                "Internet",
+                "i-classroom",
+                "arn:aws:iam::111111111111:role/records",
+                "arn:aws:s3:::pathproof-classroom"
+              ],
+              "score_range": [
+                6.0,
+                6.0
+              ],
+              "techniques": [
+                "T4"
+              ]
+            }
+          ],
+          "start": "Internet"
+        },
+        {
+          "goal": "db-classroom",
+          "paths": [],
+          "start": "Internet"
+        },
+        {
+          "goal": "arn:aws:s3:::pathproof-classroom",
+          "paths": [
+            {
+              "nodes": [
+                "arn:aws:iam::111111111111:user/student",
+                "arn:aws:iam::111111111111:role/records",
+                "arn:aws:s3:::pathproof-classroom"
+              ],
+              "score_range": [
+                18.0,
+                18.0
+              ],
+              "techniques": [
+                "T2"
+              ]
+            }
+          ],
+          "start": "arn:aws:iam::111111111111:user/student"
+        },
+        {
+          "goal": "db-classroom",
+          "paths": [],
+          "start": "arn:aws:iam::111111111111:user/student"
+        }
+      ],
+      "scope": "classroom fixtures"
+    },
+    "before": {
+      "authorized_read": {
+        "actor": "arn:aws:iam::111111111111:user/analyst",
+        "backend": "memory",
+        "control": null,
+        "digest_match": true,
+        "expected_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+        "gate": "ALLOW",
+        "http_status": 200,
+        "method": "GET",
+        "observed_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+        "path": "/classroom/canary.txt",
+        "verdict": "PROVEN"
+      },
+      "control": null,
+      "evidence": {
+        "actor": "Internet",
+        "backend": "memory",
+        "control": null,
+        "digest_match": true,
+        "expected_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+        "gate": "ALLOW",
+        "http_status": 200,
+        "method": "GET",
+        "observed_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+        "path": "/classroom/canary.txt",
+        "verdict": "PROVEN"
+      },
+      "mode": "lab",
+      "must_still_work": {
+        "approved_principal_is_trusted": true,
+        "instance_keeps_role": true,
+        "reader_can_read_canary": true
+      },
+      "observed": true,
+      "plan": {
+        "plan_hash": "9b1317a34e3f48f1449dd204d038908bd52fa4de74e548d089b566d294a3eee4",
+        "steps": [
+          {
+            "actor": "Internet",
+            "operation": "read_registered_canary",
+            "scenario": "T1",
+            "target": "arn:aws:s3:::pathproof-classroom/canary.txt"
+          }
+        ]
+      },
+      "snapshot_id": "3a8186cd31eae02bf2b3925619aa74293a126d2522c76ecb877c47bcd60bbf64",
+      "state": "present",
+      "step_observations": [
+        {
+          "operation": "read_registered_canary",
+          "state": "present"
+        }
+      ],
+      "verdict": "PROVEN"
+    },
+    "before_graph": {
+      "conditions": {
+        "T1": true,
+        "T2": true,
+        "T3": true,
+        "T4": true,
+        "T5": true
+      },
+      "edges": [
+        {
+          "evidence": "registered canary policy",
+          "relation": "can_read",
+          "source": "Internet",
+          "target": "arn:aws:s3:::pathproof-classroom",
+          "technique": "T1"
+        },
+        {
+          "evidence": "caller policy and target trust",
+          "relation": "can_assume",
+          "source": "arn:aws:iam::111111111111:user/student",
+          "target": "arn:aws:iam::111111111111:role/records",
+          "technique": "T2"
+        },
+        {
+          "evidence": "self-management permission",
+          "relation": "can_modify_policy",
+          "source": "arn:aws:iam::111111111111:user/student",
+          "target": "arn:aws:iam::111111111111:user/student",
+          "technique": "T3"
+        },
+        {
+          "evidence": "metadata setting and attached role",
+          "relation": "exposes_credentials",
+          "source": "i-classroom",
+          "target": "arn:aws:iam::111111111111:role/records",
+          "technique": "T4"
+        },
+        {
+          "evidence": "modeled ingress",
+          "relation": "public_ingress_configured",
+          "source": "Internet",
+          "target": "i-classroom",
+          "technique": "T4"
+        },
+        {
+          "evidence": "role grant scoped to registered canary",
+          "relation": "can_read",
+          "source": "arn:aws:iam::111111111111:role/records",
+          "target": "arn:aws:s3:::pathproof-classroom",
+          "technique": ""
+        }
+      ],
+      "engine": "stdlib rehearsal",
+      "nodes": [
+        {
+          "id": "Internet",
+          "type": "origin"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:user/student",
+          "type": "user"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:user/analyst",
+          "type": "user"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:role/records",
+          "type": "role"
+        },
+        {
+          "id": "arn:aws:s3:::pathproof-classroom",
+          "type": "bucket"
+        },
+        {
+          "id": "i-classroom",
+          "type": "instance"
+        },
+        {
+          "id": "db-classroom",
+          "type": "database"
+        }
+      ],
+      "pairs": [
+        {
+          "goal": "arn:aws:s3:::pathproof-classroom",
+          "paths": [
+            {
+              "nodes": [
+                "Internet",
+                "arn:aws:s3:::pathproof-classroom"
+              ],
+              "score_range": [
+                30.0,
+                30.0
+              ],
+              "techniques": [
+                "T1"
+              ]
+            },
+            {
+              "nodes": [
+                "Internet",
+                "i-classroom",
+                "arn:aws:iam::111111111111:role/records",
+                "arn:aws:s3:::pathproof-classroom"
+              ],
+              "score_range": [
+                6.0,
+                6.0
+              ],
+              "techniques": [
+                "T4"
+              ]
+            }
+          ],
+          "start": "Internet"
+        },
+        {
+          "goal": "db-classroom",
+          "paths": [],
+          "start": "Internet"
+        },
+        {
+          "goal": "arn:aws:s3:::pathproof-classroom",
+          "paths": [
+            {
+              "nodes": [
+                "arn:aws:iam::111111111111:user/student",
+                "arn:aws:iam::111111111111:role/records",
+                "arn:aws:s3:::pathproof-classroom"
+              ],
+              "score_range": [
+                18.0,
+                18.0
+              ],
+              "techniques": [
+                "T2"
+              ]
+            }
+          ],
+          "start": "arn:aws:iam::111111111111:user/student"
+        },
+        {
+          "goal": "db-classroom",
+          "paths": [],
+          "start": "arn:aws:iam::111111111111:user/student"
+        }
+      ],
+      "scope": "classroom fixtures"
+    },
+    "outcome": "verified",
+    "patch": {
+      "changed": true,
+      "field": "bucket_statements",
+      "new": [
+        {
+          "Action": "s3:GetObject",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::111111111111:user/analyst"
+          },
+          "Resource": "arn:aws:s3:::pathproof-classroom/canary.txt",
+          "Sid": "KeepAnalyst"
+        }
+      ],
+      "old": [
+        {
+          "Action": "s3:GetObject",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::111111111111:user/analyst"
+          },
+          "Resource": "arn:aws:s3:::pathproof-classroom/canary.txt",
+          "Sid": "KeepAnalyst"
+        },
+        {
+          "Action": "s3:GetObject",
+          "Effect": "Allow",
+          "Principal": "*",
+          "Resource": "arn:aws:s3:::pathproof-classroom/canary.txt",
+          "Sid": "PublicCanary"
+        }
+      ]
+    },
+    "scenario": "T1"
+  },
+  {
+    "after": {
+      "authorized_read": {
+        "actor": "arn:aws:iam::111111111111:user/analyst",
+        "backend": "memory",
+        "control": null,
+        "digest_match": true,
+        "expected_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+        "gate": "ALLOW",
+        "http_status": 200,
+        "method": "GET",
+        "observed_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+        "path": "/classroom/canary.txt",
+        "verdict": "PROVEN"
+      },
+      "control": null,
+      "mode": "lab",
+      "must_still_work": {
+        "approved_principal_is_trusted": true,
+        "instance_keeps_role": true,
+        "reader_can_read_canary": true
+      },
+      "observed": false,
+      "plan": {
+        "plan_hash": "40dc89658f010683544ac9f9d071b35fc263cf6269cfbbd8b0b229a8090ba3b8",
+        "steps": [
+          {
+            "actor": "audit",
+            "operation": "inspect_trail",
+            "scenario": "T5",
+            "target": "trail-classroom"
+          }
+        ]
+      },
+      "snapshot_id": "b1c163507c6d2f8011d90921e7192a2c9538c19611a6cb3fa67945fa9b1fcda0",
+      "state": "absent",
+      "step_observations": [
+        {
+          "operation": "inspect_trail",
+          "state": "absent"
+        }
+      ],
+      "verdict": null
+    },
+    "after_graph": {
+      "conditions": {
+        "T1": false,
+        "T2": true,
+        "T3": true,
+        "T4": true,
+        "T5": false
+      },
+      "edges": [
+        {
+          "evidence": "caller policy and target trust",
+          "relation": "can_assume",
+          "source": "arn:aws:iam::111111111111:user/student",
+          "target": "arn:aws:iam::111111111111:role/records",
+          "technique": "T2"
+        },
+        {
+          "evidence": "self-management permission",
+          "relation": "can_modify_policy",
+          "source": "arn:aws:iam::111111111111:user/student",
+          "target": "arn:aws:iam::111111111111:user/student",
+          "technique": "T3"
+        },
+        {
+          "evidence": "metadata setting and attached role",
+          "relation": "exposes_credentials",
+          "source": "i-classroom",
+          "target": "arn:aws:iam::111111111111:role/records",
+          "technique": "T4"
+        },
+        {
+          "evidence": "modeled ingress",
+          "relation": "public_ingress_configured",
+          "source": "Internet",
+          "target": "i-classroom",
+          "technique": "T4"
+        },
+        {
+          "evidence": "role grant scoped to registered canary",
+          "relation": "can_read",
+          "source": "arn:aws:iam::111111111111:role/records",
+          "target": "arn:aws:s3:::pathproof-classroom",
+          "technique": ""
+        }
+      ],
+      "engine": "stdlib rehearsal",
+      "nodes": [
+        {
+          "id": "Internet",
+          "type": "origin"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:user/student",
+          "type": "user"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:user/analyst",
+          "type": "user"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:role/records",
+          "type": "role"
+        },
+        {
+          "id": "arn:aws:s3:::pathproof-classroom",
+          "type": "bucket"
+        },
+        {
+          "id": "i-classroom",
+          "type": "instance"
+        },
+        {
+          "id": "db-classroom",
+          "type": "database"
+        }
+      ],
+      "pairs": [
+        {
+          "goal": "arn:aws:s3:::pathproof-classroom",
+          "paths": [
+            {
+              "nodes": [
+                "Internet",
+                "i-classroom",
+                "arn:aws:iam::111111111111:role/records",
+                "arn:aws:s3:::pathproof-classroom"
+              ],
+              "score_range": [
+                4.0,
+                4.0
+              ],
+              "techniques": [
+                "T4"
+              ]
+            }
+          ],
+          "start": "Internet"
+        },
+        {
+          "goal": "db-classroom",
+          "paths": [],
+          "start": "Internet"
+        },
+        {
+          "goal": "arn:aws:s3:::pathproof-classroom",
+          "paths": [
+            {
+              "nodes": [
+                "arn:aws:iam::111111111111:user/student",
+                "arn:aws:iam::111111111111:role/records",
+                "arn:aws:s3:::pathproof-classroom"
+              ],
+              "score_range": [
+                12.0,
+                12.0
+              ],
+              "techniques": [
+                "T2"
+              ]
+            }
+          ],
+          "start": "arn:aws:iam::111111111111:user/student"
+        },
+        {
+          "goal": "db-classroom",
+          "paths": [],
+          "start": "arn:aws:iam::111111111111:user/student"
+        }
+      ],
+      "scope": "classroom fixtures"
+    },
+    "before": {
+      "authorized_read": {
+        "actor": "arn:aws:iam::111111111111:user/analyst",
+        "backend": "memory",
+        "control": null,
+        "digest_match": true,
+        "expected_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+        "gate": "ALLOW",
+        "http_status": 200,
+        "method": "GET",
+        "observed_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+        "path": "/classroom/canary.txt",
+        "verdict": "PROVEN"
+      },
+      "control": null,
+      "mode": "lab",
+      "must_still_work": {
+        "approved_principal_is_trusted": true,
+        "instance_keeps_role": true,
+        "reader_can_read_canary": true
+      },
+      "observed": true,
+      "plan": {
+        "plan_hash": "40dc89658f010683544ac9f9d071b35fc263cf6269cfbbd8b0b229a8090ba3b8",
+        "steps": [
+          {
+            "actor": "audit",
+            "operation": "inspect_trail",
+            "scenario": "T5",
+            "target": "trail-classroom"
+          }
+        ]
+      },
+      "snapshot_id": "7132b51ef6295e2bfb4a1acb1c8b6f3060006622e145a0328006ebb64ce689b7",
+      "state": "present",
+      "step_observations": [
+        {
+          "operation": "inspect_trail",
+          "state": "present"
+        }
+      ],
+      "verdict": null
+    },
+    "before_graph": {
+      "conditions": {
+        "T1": false,
+        "T2": true,
+        "T3": true,
+        "T4": true,
+        "T5": true
+      },
+      "edges": [
+        {
+          "evidence": "caller policy and target trust",
+          "relation": "can_assume",
+          "source": "arn:aws:iam::111111111111:user/student",
+          "target": "arn:aws:iam::111111111111:role/records",
+          "technique": "T2"
+        },
+        {
+          "evidence": "self-management permission",
+          "relation": "can_modify_policy",
+          "source": "arn:aws:iam::111111111111:user/student",
+          "target": "arn:aws:iam::111111111111:user/student",
+          "technique": "T3"
+        },
+        {
+          "evidence": "metadata setting and attached role",
+          "relation": "exposes_credentials",
+          "source": "i-classroom",
+          "target": "arn:aws:iam::111111111111:role/records",
+          "technique": "T4"
+        },
+        {
+          "evidence": "modeled ingress",
+          "relation": "public_ingress_configured",
+          "source": "Internet",
+          "target": "i-classroom",
+          "technique": "T4"
+        },
+        {
+          "evidence": "role grant scoped to registered canary",
+          "relation": "can_read",
+          "source": "arn:aws:iam::111111111111:role/records",
+          "target": "arn:aws:s3:::pathproof-classroom",
+          "technique": ""
+        }
+      ],
+      "engine": "stdlib rehearsal",
+      "nodes": [
+        {
+          "id": "Internet",
+          "type": "origin"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:user/student",
+          "type": "user"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:user/analyst",
+          "type": "user"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:role/records",
+          "type": "role"
+        },
+        {
+          "id": "arn:aws:s3:::pathproof-classroom",
+          "type": "bucket"
+        },
+        {
+          "id": "i-classroom",
+          "type": "instance"
+        },
+        {
+          "id": "db-classroom",
+          "type": "database"
+        }
+      ],
+      "pairs": [
+        {
+          "goal": "arn:aws:s3:::pathproof-classroom",
+          "paths": [
+            {
+              "nodes": [
+                "Internet",
+                "i-classroom",
+                "arn:aws:iam::111111111111:role/records",
+                "arn:aws:s3:::pathproof-classroom"
+              ],
+              "score_range": [
+                6.0,
+                6.0
+              ],
+              "techniques": [
+                "T4"
+              ]
+            }
+          ],
+          "start": "Internet"
+        },
+        {
+          "goal": "db-classroom",
+          "paths": [],
+          "start": "Internet"
+        },
+        {
+          "goal": "arn:aws:s3:::pathproof-classroom",
+          "paths": [
+            {
+              "nodes": [
+                "arn:aws:iam::111111111111:user/student",
+                "arn:aws:iam::111111111111:role/records",
+                "arn:aws:s3:::pathproof-classroom"
+              ],
+              "score_range": [
+                18.0,
+                18.0
+              ],
+              "techniques": [
+                "T2"
+              ]
+            }
+          ],
+          "start": "arn:aws:iam::111111111111:user/student"
+        },
+        {
+          "goal": "db-classroom",
+          "paths": [],
+          "start": "arn:aws:iam::111111111111:user/student"
+        }
+      ],
+      "scope": "classroom fixtures"
+    },
+    "outcome": "verified",
+    "patch": {
+      "changed": true,
+      "field": "multi_region",
+      "new": true,
+      "old": false
+    },
+    "scenario": "T5"
+  },
+  {
+    "after": {
+      "authorized_read": {
+        "actor": "arn:aws:iam::111111111111:user/analyst",
+        "backend": "memory",
+        "control": null,
+        "digest_match": true,
+        "expected_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+        "gate": "ALLOW",
+        "http_status": 200,
+        "method": "GET",
+        "observed_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+        "path": "/classroom/canary.txt",
+        "verdict": "PROVEN"
+      },
+      "control": "local policy evaluator: target trust",
+      "decisions": {
+        "caller permission": "ALLOW",
+        "target trust": "IMPLICIT_DENY"
+      },
+      "mode": "lab",
+      "must_still_work": {
+        "approved_principal_is_trusted": true,
+        "instance_keeps_role": true,
+        "reader_can_read_canary": true
+      },
+      "observed": false,
+      "plan": {
+        "plan_hash": "4723750c7fa410faa3c9a0ef189bb5599531b2f2f980c828733d5a9ab6b9429f",
+        "steps": [
+          {
+            "actor": "arn:aws:iam::111111111111:user/student",
+            "operation": "check_trust",
+            "scenario": "T2",
+            "target": "arn:aws:iam::111111111111:role/records"
+          },
+          {
+            "actor": "arn:aws:iam::111111111111:role/records",
+            "operation": "inspect_role_canary_grant",
+            "scenario": "T2",
+            "target": "arn:aws:s3:::pathproof-classroom/canary.txt"
+          }
+        ]
+      },
+      "snapshot_id": "424e045e367db6ac137e6053dc665a06bc1d4c29bb3a1fe907ad43429311f776",
+      "state": "absent",
+      "step_observations": [
+        {
+          "operation": "check_trust",
+          "state": "absent"
+        },
+        {
+          "operation": "inspect_role_canary_grant",
+          "state": "not_reached"
+        }
+      ],
+      "verdict": "BLOCKED"
+    },
+    "after_graph": {
+      "conditions": {
+        "T1": false,
+        "T2": false,
+        "T3": true,
+        "T4": true,
+        "T5": false
+      },
+      "edges": [
+        {
+          "evidence": "self-management permission",
+          "relation": "can_modify_policy",
+          "source": "arn:aws:iam::111111111111:user/student",
+          "target": "arn:aws:iam::111111111111:user/student",
+          "technique": "T3"
+        },
+        {
+          "evidence": "metadata setting and attached role",
+          "relation": "exposes_credentials",
+          "source": "i-classroom",
+          "target": "arn:aws:iam::111111111111:role/records",
+          "technique": "T4"
+        },
+        {
+          "evidence": "modeled ingress",
+          "relation": "public_ingress_configured",
+          "source": "Internet",
+          "target": "i-classroom",
+          "technique": "T4"
+        },
+        {
+          "evidence": "role grant scoped to registered canary",
+          "relation": "can_read",
+          "source": "arn:aws:iam::111111111111:role/records",
+          "target": "arn:aws:s3:::pathproof-classroom",
+          "technique": ""
+        }
+      ],
+      "engine": "stdlib rehearsal",
+      "nodes": [
+        {
+          "id": "Internet",
+          "type": "origin"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:user/student",
+          "type": "user"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:user/analyst",
+          "type": "user"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:role/records",
+          "type": "role"
+        },
+        {
+          "id": "arn:aws:s3:::pathproof-classroom",
+          "type": "bucket"
+        },
+        {
+          "id": "i-classroom",
+          "type": "instance"
+        },
+        {
+          "id": "db-classroom",
+          "type": "database"
+        }
+      ],
+      "pairs": [
+        {
+          "goal": "arn:aws:s3:::pathproof-classroom",
+          "paths": [
+            {
+              "nodes": [
+                "Internet",
+                "i-classroom",
+                "arn:aws:iam::111111111111:role/records",
+                "arn:aws:s3:::pathproof-classroom"
+              ],
+              "score_range": [
+                4.0,
+                4.0
+              ],
+              "techniques": [
+                "T4"
+              ]
+            }
+          ],
+          "start": "Internet"
+        },
+        {
+          "goal": "db-classroom",
+          "paths": [],
+          "start": "Internet"
+        },
+        {
+          "goal": "arn:aws:s3:::pathproof-classroom",
+          "paths": [],
+          "start": "arn:aws:iam::111111111111:user/student"
+        },
+        {
+          "goal": "db-classroom",
+          "paths": [],
+          "start": "arn:aws:iam::111111111111:user/student"
+        }
+      ],
+      "scope": "classroom fixtures"
+    },
+    "before": {
+      "authorized_read": {
+        "actor": "arn:aws:iam::111111111111:user/analyst",
+        "backend": "memory",
+        "control": null,
+        "digest_match": true,
+        "expected_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+        "gate": "ALLOW",
+        "http_status": 200,
+        "method": "GET",
+        "observed_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+        "path": "/classroom/canary.txt",
+        "verdict": "PROVEN"
+      },
+      "control": null,
+      "decisions": {
+        "caller permission": "ALLOW",
+        "target trust": "ALLOW"
+      },
+      "mode": "lab",
+      "must_still_work": {
+        "approved_principal_is_trusted": true,
+        "instance_keeps_role": true,
+        "reader_can_read_canary": true
+      },
+      "observed": true,
+      "plan": {
+        "plan_hash": "4723750c7fa410faa3c9a0ef189bb5599531b2f2f980c828733d5a9ab6b9429f",
+        "steps": [
+          {
+            "actor": "arn:aws:iam::111111111111:user/student",
+            "operation": "check_trust",
+            "scenario": "T2",
+            "target": "arn:aws:iam::111111111111:role/records"
+          },
+          {
+            "actor": "arn:aws:iam::111111111111:role/records",
+            "operation": "inspect_role_canary_grant",
+            "scenario": "T2",
+            "target": "arn:aws:s3:::pathproof-classroom/canary.txt"
+          }
+        ]
+      },
+      "snapshot_id": "b1c163507c6d2f8011d90921e7192a2c9538c19611a6cb3fa67945fa9b1fcda0",
+      "state": "present",
+      "step_observations": [
+        {
+          "operation": "check_trust",
+          "state": "present"
+        },
+        {
+          "operation": "inspect_role_canary_grant",
+          "state": "supported_by_fixture"
+        }
+      ],
+      "verdict": "THEORETICAL"
+    },
+    "before_graph": {
+      "conditions": {
+        "T1": false,
+        "T2": true,
+        "T3": true,
+        "T4": true,
+        "T5": false
+      },
+      "edges": [
+        {
+          "evidence": "caller policy and target trust",
+          "relation": "can_assume",
+          "source": "arn:aws:iam::111111111111:user/student",
+          "target": "arn:aws:iam::111111111111:role/records",
+          "technique": "T2"
+        },
+        {
+          "evidence": "self-management permission",
+          "relation": "can_modify_policy",
+          "source": "arn:aws:iam::111111111111:user/student",
+          "target": "arn:aws:iam::111111111111:user/student",
+          "technique": "T3"
+        },
+        {
+          "evidence": "metadata setting and attached role",
+          "relation": "exposes_credentials",
+          "source": "i-classroom",
+          "target": "arn:aws:iam::111111111111:role/records",
+          "technique": "T4"
+        },
+        {
+          "evidence": "modeled ingress",
+          "relation": "public_ingress_configured",
+          "source": "Internet",
+          "target": "i-classroom",
+          "technique": "T4"
+        },
+        {
+          "evidence": "role grant scoped to registered canary",
+          "relation": "can_read",
+          "source": "arn:aws:iam::111111111111:role/records",
+          "target": "arn:aws:s3:::pathproof-classroom",
+          "technique": ""
+        }
+      ],
+      "engine": "stdlib rehearsal",
+      "nodes": [
+        {
+          "id": "Internet",
+          "type": "origin"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:user/student",
+          "type": "user"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:user/analyst",
+          "type": "user"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:role/records",
+          "type": "role"
+        },
+        {
+          "id": "arn:aws:s3:::pathproof-classroom",
+          "type": "bucket"
+        },
+        {
+          "id": "i-classroom",
+          "type": "instance"
+        },
+        {
+          "id": "db-classroom",
+          "type": "database"
+        }
+      ],
+      "pairs": [
+        {
+          "goal": "arn:aws:s3:::pathproof-classroom",
+          "paths": [
+            {
+              "nodes": [
+                "Internet",
+                "i-classroom",
+                "arn:aws:iam::111111111111:role/records",
+                "arn:aws:s3:::pathproof-classroom"
+              ],
+              "score_range": [
+                4.0,
+                4.0
+              ],
+              "techniques": [
+                "T4"
+              ]
+            }
+          ],
+          "start": "Internet"
+        },
+        {
+          "goal": "db-classroom",
+          "paths": [],
+          "start": "Internet"
+        },
+        {
+          "goal": "arn:aws:s3:::pathproof-classroom",
+          "paths": [
+            {
+              "nodes": [
+                "arn:aws:iam::111111111111:user/student",
+                "arn:aws:iam::111111111111:role/records",
+                "arn:aws:s3:::pathproof-classroom"
+              ],
+              "score_range": [
+                12.0,
+                12.0
+              ],
+              "techniques": [
+                "T2"
+              ]
+            }
+          ],
+          "start": "arn:aws:iam::111111111111:user/student"
+        },
+        {
+          "goal": "db-classroom",
+          "paths": [],
+          "start": "arn:aws:iam::111111111111:user/student"
+        }
+      ],
+      "scope": "classroom fixtures"
+    },
+    "outcome": "verified",
+    "patch": {
+      "changed": true,
+      "field": "trust",
+      "new": [
+        {
+          "Action": "sts:AssumeRole",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::111111111111:user/analyst"
+          },
+          "Sid": "KeepAnalyst"
+        }
+      ],
+      "old": [
+        {
+          "Action": "sts:AssumeRole",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::111111111111:user/analyst"
+          },
+          "Sid": "KeepAnalyst"
+        },
+        {
+          "Action": "sts:AssumeRole",
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::111111111111:user/student"
+          },
+          "Sid": "UnexpectedStudent"
+        }
+      ]
+    },
+    "scenario": "T2"
+  },
+  {
+    "after": {
+      "authorized_read": {
+        "actor": "arn:aws:iam::111111111111:user/analyst",
+        "backend": "memory",
+        "control": null,
+        "digest_match": true,
+        "expected_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+        "gate": "ALLOW",
+        "http_status": 200,
+        "method": "GET",
+        "observed_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+        "path": "/classroom/canary.txt",
+        "verdict": "PROVEN"
+      },
+      "control": "local policy evaluator: self-management permission",
+      "decisions": {
+        "self-management permission": "IMPLICIT_DENY"
+      },
+      "mode": "lab",
+      "must_still_work": {
+        "approved_principal_is_trusted": true,
+        "instance_keeps_role": true,
+        "reader_can_read_canary": true
+      },
+      "observed": false,
+      "plan": {
+        "plan_hash": "e6f91ee47859bb50d3312271212bb690eb3e06707441ceb35fab94b9ed7f834d",
+        "steps": [
+          {
+            "actor": "arn:aws:iam::111111111111:user/student",
+            "operation": "check_self_management",
+            "scenario": "T3",
+            "target": "arn:aws:iam::111111111111:user/student"
+          }
+        ]
+      },
+      "snapshot_id": "28dce023b0908bb6fcc101265723a37ea27aba68f49c73b2f95da0afc4059461",
+      "state": "absent",
+      "step_observations": [
+        {
+          "operation": "check_self_management",
+          "state": "absent"
+        }
+      ],
+      "verdict": "BLOCKED"
+    },
+    "after_graph": {
+      "conditions": {
+        "T1": false,
+        "T2": false,
+        "T3": false,
+        "T4": true,
+        "T5": false
+      },
+      "edges": [
+        {
+          "evidence": "metadata setting and attached role",
+          "relation": "exposes_credentials",
+          "source": "i-classroom",
+          "target": "arn:aws:iam::111111111111:role/records",
+          "technique": "T4"
+        },
+        {
+          "evidence": "modeled ingress",
+          "relation": "public_ingress_configured",
+          "source": "Internet",
+          "target": "i-classroom",
+          "technique": "T4"
+        },
+        {
+          "evidence": "role grant scoped to registered canary",
+          "relation": "can_read",
+          "source": "arn:aws:iam::111111111111:role/records",
+          "target": "arn:aws:s3:::pathproof-classroom",
+          "technique": ""
+        }
+      ],
+      "engine": "stdlib rehearsal",
+      "nodes": [
+        {
+          "id": "Internet",
+          "type": "origin"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:user/student",
+          "type": "user"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:user/analyst",
+          "type": "user"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:role/records",
+          "type": "role"
+        },
+        {
+          "id": "arn:aws:s3:::pathproof-classroom",
+          "type": "bucket"
+        },
+        {
+          "id": "i-classroom",
+          "type": "instance"
+        },
+        {
+          "id": "db-classroom",
+          "type": "database"
+        }
+      ],
+      "pairs": [
+        {
+          "goal": "arn:aws:s3:::pathproof-classroom",
+          "paths": [
+            {
+              "nodes": [
+                "Internet",
+                "i-classroom",
+                "arn:aws:iam::111111111111:role/records",
+                "arn:aws:s3:::pathproof-classroom"
+              ],
+              "score_range": [
+                4.0,
+                4.0
+              ],
+              "techniques": [
+                "T4"
+              ]
+            }
+          ],
+          "start": "Internet"
+        },
+        {
+          "goal": "db-classroom",
+          "paths": [],
+          "start": "Internet"
+        },
+        {
+          "goal": "arn:aws:s3:::pathproof-classroom",
+          "paths": [],
+          "start": "arn:aws:iam::111111111111:user/student"
+        },
+        {
+          "goal": "db-classroom",
+          "paths": [],
+          "start": "arn:aws:iam::111111111111:user/student"
+        }
+      ],
+      "scope": "classroom fixtures"
+    },
+    "before": {
+      "authorized_read": {
+        "actor": "arn:aws:iam::111111111111:user/analyst",
+        "backend": "memory",
+        "control": null,
+        "digest_match": true,
+        "expected_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+        "gate": "ALLOW",
+        "http_status": 200,
+        "method": "GET",
+        "observed_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+        "path": "/classroom/canary.txt",
+        "verdict": "PROVEN"
+      },
+      "control": null,
+      "decisions": {
+        "self-management permission": "ALLOW"
+      },
+      "mode": "lab",
+      "must_still_work": {
+        "approved_principal_is_trusted": true,
+        "instance_keeps_role": true,
+        "reader_can_read_canary": true
+      },
+      "observed": true,
+      "plan": {
+        "plan_hash": "e6f91ee47859bb50d3312271212bb690eb3e06707441ceb35fab94b9ed7f834d",
+        "steps": [
+          {
+            "actor": "arn:aws:iam::111111111111:user/student",
+            "operation": "check_self_management",
+            "scenario": "T3",
+            "target": "arn:aws:iam::111111111111:user/student"
+          }
+        ]
+      },
+      "snapshot_id": "424e045e367db6ac137e6053dc665a06bc1d4c29bb3a1fe907ad43429311f776",
+      "state": "present",
+      "step_observations": [
+        {
+          "operation": "check_self_management",
+          "state": "present"
+        }
+      ],
+      "verdict": "THEORETICAL"
+    },
+    "before_graph": {
+      "conditions": {
+        "T1": false,
+        "T2": false,
+        "T3": true,
+        "T4": true,
+        "T5": false
+      },
+      "edges": [
+        {
+          "evidence": "self-management permission",
+          "relation": "can_modify_policy",
+          "source": "arn:aws:iam::111111111111:user/student",
+          "target": "arn:aws:iam::111111111111:user/student",
+          "technique": "T3"
+        },
+        {
+          "evidence": "metadata setting and attached role",
+          "relation": "exposes_credentials",
+          "source": "i-classroom",
+          "target": "arn:aws:iam::111111111111:role/records",
+          "technique": "T4"
+        },
+        {
+          "evidence": "modeled ingress",
+          "relation": "public_ingress_configured",
+          "source": "Internet",
+          "target": "i-classroom",
+          "technique": "T4"
+        },
+        {
+          "evidence": "role grant scoped to registered canary",
+          "relation": "can_read",
+          "source": "arn:aws:iam::111111111111:role/records",
+          "target": "arn:aws:s3:::pathproof-classroom",
+          "technique": ""
+        }
+      ],
+      "engine": "stdlib rehearsal",
+      "nodes": [
+        {
+          "id": "Internet",
+          "type": "origin"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:user/student",
+          "type": "user"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:user/analyst",
+          "type": "user"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:role/records",
+          "type": "role"
+        },
+        {
+          "id": "arn:aws:s3:::pathproof-classroom",
+          "type": "bucket"
+        },
+        {
+          "id": "i-classroom",
+          "type": "instance"
+        },
+        {
+          "id": "db-classroom",
+          "type": "database"
+        }
+      ],
+      "pairs": [
+        {
+          "goal": "arn:aws:s3:::pathproof-classroom",
+          "paths": [
+            {
+              "nodes": [
+                "Internet",
+                "i-classroom",
+                "arn:aws:iam::111111111111:role/records",
+                "arn:aws:s3:::pathproof-classroom"
+              ],
+              "score_range": [
+                4.0,
+                4.0
+              ],
+              "techniques": [
+                "T4"
+              ]
+            }
+          ],
+          "start": "Internet"
+        },
+        {
+          "goal": "db-classroom",
+          "paths": [],
+          "start": "Internet"
+        },
+        {
+          "goal": "arn:aws:s3:::pathproof-classroom",
+          "paths": [],
+          "start": "arn:aws:iam::111111111111:user/student"
+        },
+        {
+          "goal": "db-classroom",
+          "paths": [],
+          "start": "arn:aws:iam::111111111111:user/student"
+        }
+      ],
+      "scope": "classroom fixtures"
+    },
+    "outcome": "verified",
+    "patch": {
+      "changed": true,
+      "field": "identity",
+      "new": [
+        {
+          "Action": "sts:AssumeRole",
+          "Effect": "Allow",
+          "Resource": "arn:aws:iam::111111111111:role/records",
+          "Sid": "TrustCandidate"
+        }
+      ],
+      "old": [
+        {
+          "Action": "sts:AssumeRole",
+          "Effect": "Allow",
+          "Resource": "arn:aws:iam::111111111111:role/records",
+          "Sid": "TrustCandidate"
+        },
+        {
+          "Action": "iam:PutUserPolicy",
+          "Effect": "Allow",
+          "Resource": "arn:aws:iam::111111111111:user/student",
+          "Sid": "SelfManagement"
+        }
+      ]
+    },
+    "scenario": "T3"
+  },
+  {
+    "after": {
+      "authorized_read": {
+        "actor": "arn:aws:iam::111111111111:user/analyst",
+        "backend": "memory",
+        "control": null,
+        "digest_match": true,
+        "expected_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+        "gate": "ALLOW",
+        "http_status": 200,
+        "method": "GET",
+        "observed_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+        "path": "/classroom/canary.txt",
+        "verdict": "PROVEN"
+      },
+      "control": null,
+      "mode": "lab",
+      "must_still_work": {
+        "approved_principal_is_trusted": true,
+        "instance_keeps_role": true,
+        "reader_can_read_canary": true
+      },
+      "observed": false,
+      "plan": {
+        "plan_hash": "26ec2dcc709eb65561687cc55d1f3d9687272daf5f579baa1dc47642beb46672",
+        "steps": [
+          {
+            "actor": "Internet",
+            "operation": "inspect_instance",
+            "scenario": "T4",
+            "target": "i-classroom"
+          },
+          {
+            "actor": "arn:aws:iam::111111111111:role/records",
+            "operation": "inspect_role_canary_grant",
+            "scenario": "T4",
+            "target": "arn:aws:s3:::pathproof-classroom/canary.txt"
+          }
+        ]
+      },
+      "snapshot_id": "d102f93125d4b18243620fbeda6218dfc7829f1a0539375d08f0f696f7b7923c",
+      "state": "absent",
+      "step_observations": [
+        {
+          "operation": "inspect_instance",
+          "state": "absent"
+        },
+        {
+          "operation": "inspect_role_canary_grant",
+          "state": "not_reached"
+        }
+      ],
+      "verdict": null
+    },
+    "after_graph": {
+      "conditions": {
+        "T1": false,
+        "T2": false,
+        "T3": false,
+        "T4": false,
+        "T5": false
+      },
+      "edges": [
+        {
+          "evidence": "role grant scoped to registered canary",
+          "relation": "can_read",
+          "source": "arn:aws:iam::111111111111:role/records",
+          "target": "arn:aws:s3:::pathproof-classroom",
+          "technique": ""
+        }
+      ],
+      "engine": "stdlib rehearsal",
+      "nodes": [
+        {
+          "id": "Internet",
+          "type": "origin"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:user/student",
+          "type": "user"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:user/analyst",
+          "type": "user"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:role/records",
+          "type": "role"
+        },
+        {
+          "id": "arn:aws:s3:::pathproof-classroom",
+          "type": "bucket"
+        },
+        {
+          "id": "i-classroom",
+          "type": "instance"
+        },
+        {
+          "id": "db-classroom",
+          "type": "database"
+        }
+      ],
+      "pairs": [
+        {
+          "goal": "arn:aws:s3:::pathproof-classroom",
+          "paths": [],
+          "start": "Internet"
+        },
+        {
+          "goal": "db-classroom",
+          "paths": [],
+          "start": "Internet"
+        },
+        {
+          "goal": "arn:aws:s3:::pathproof-classroom",
+          "paths": [],
+          "start": "arn:aws:iam::111111111111:user/student"
+        },
+        {
+          "goal": "db-classroom",
+          "paths": [],
+          "start": "arn:aws:iam::111111111111:user/student"
+        }
+      ],
+      "scope": "classroom fixtures"
+    },
+    "before": {
+      "authorized_read": {
+        "actor": "arn:aws:iam::111111111111:user/analyst",
+        "backend": "memory",
+        "control": null,
+        "digest_match": true,
+        "expected_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+        "gate": "ALLOW",
+        "http_status": 200,
+        "method": "GET",
+        "observed_sha256": "5d53a41e61e783bad3132300c59172afc63d1e77333e8cc6b452a72a6c4846e1",
+        "path": "/classroom/canary.txt",
+        "verdict": "PROVEN"
+      },
+      "control": null,
+      "mode": "lab",
+      "must_still_work": {
+        "approved_principal_is_trusted": true,
+        "instance_keeps_role": true,
+        "reader_can_read_canary": true
+      },
+      "observed": true,
+      "plan": {
+        "plan_hash": "26ec2dcc709eb65561687cc55d1f3d9687272daf5f579baa1dc47642beb46672",
+        "steps": [
+          {
+            "actor": "Internet",
+            "operation": "inspect_instance",
+            "scenario": "T4",
+            "target": "i-classroom"
+          },
+          {
+            "actor": "arn:aws:iam::111111111111:role/records",
+            "operation": "inspect_role_canary_grant",
+            "scenario": "T4",
+            "target": "arn:aws:s3:::pathproof-classroom/canary.txt"
+          }
+        ]
+      },
+      "snapshot_id": "28dce023b0908bb6fcc101265723a37ea27aba68f49c73b2f95da0afc4059461",
+      "state": "present",
+      "step_observations": [
+        {
+          "operation": "inspect_instance",
+          "state": "present"
+        },
+        {
+          "operation": "inspect_role_canary_grant",
+          "state": "supported_by_fixture"
+        }
+      ],
+      "verdict": "THEORETICAL"
+    },
+    "before_graph": {
+      "conditions": {
+        "T1": false,
+        "T2": false,
+        "T3": false,
+        "T4": true,
+        "T5": false
+      },
+      "edges": [
+        {
+          "evidence": "metadata setting and attached role",
+          "relation": "exposes_credentials",
+          "source": "i-classroom",
+          "target": "arn:aws:iam::111111111111:role/records",
+          "technique": "T4"
+        },
+        {
+          "evidence": "modeled ingress",
+          "relation": "public_ingress_configured",
+          "source": "Internet",
+          "target": "i-classroom",
+          "technique": "T4"
+        },
+        {
+          "evidence": "role grant scoped to registered canary",
+          "relation": "can_read",
+          "source": "arn:aws:iam::111111111111:role/records",
+          "target": "arn:aws:s3:::pathproof-classroom",
+          "technique": ""
+        }
+      ],
+      "engine": "stdlib rehearsal",
+      "nodes": [
+        {
+          "id": "Internet",
+          "type": "origin"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:user/student",
+          "type": "user"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:user/analyst",
+          "type": "user"
+        },
+        {
+          "id": "arn:aws:iam::111111111111:role/records",
+          "type": "role"
+        },
+        {
+          "id": "arn:aws:s3:::pathproof-classroom",
+          "type": "bucket"
+        },
+        {
+          "id": "i-classroom",
+          "type": "instance"
+        },
+        {
+          "id": "db-classroom",
+          "type": "database"
+        }
+      ],
+      "pairs": [
+        {
+          "goal": "arn:aws:s3:::pathproof-classroom",
+          "paths": [
+            {
+              "nodes": [
+                "Internet",
+                "i-classroom",
+                "arn:aws:iam::111111111111:role/records",
+                "arn:aws:s3:::pathproof-classroom"
+              ],
+              "score_range": [
+                4.0,
+                4.0
+              ],
+              "techniques": [
+                "T4"
+              ]
+            }
+          ],
+          "start": "Internet"
+        },
+        {
+          "goal": "db-classroom",
+          "paths": [],
+          "start": "Internet"
+        },
+        {
+          "goal": "arn:aws:s3:::pathproof-classroom",
+          "paths": [],
+          "start": "arn:aws:iam::111111111111:user/student"
+        },
+        {
+          "goal": "db-classroom",
+          "paths": [],
+          "start": "arn:aws:iam::111111111111:user/student"
+        }
+      ],
+      "scope": "classroom fixtures"
+    },
+    "outcome": "verified",
+    "patch": {
+      "changed": true,
+      "field": "tokens",
+      "new": "required",
+      "old": "optional"
+    },
+    "scenario": "T4"
+  }
+]

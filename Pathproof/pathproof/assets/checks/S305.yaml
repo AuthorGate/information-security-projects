@@ -1,0 +1,8 @@
+id: "S305"
+service: "s3"
+kind: "bucket"
+fact: "access_logging"
+description: "Bucket access logging configured"
+severity: "LOW"
+remediation: "Configure an appropriate access-log destination."
+cis: null

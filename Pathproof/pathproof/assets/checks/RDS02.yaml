@@ -1,0 +1,8 @@
+id: "RDS02"
+service: "rds"
+kind: "database"
+fact: "private"
+description: "Database public accessibility disabled"
+severity: "HIGH"
+remediation: "Disable public accessibility after validating connectivity."
+cis: "CIS AWS Foundations 3.0.0/2.3.3"

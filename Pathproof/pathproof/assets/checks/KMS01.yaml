@@ -1,0 +1,8 @@
+id: "KMS01"
+service: "kms"
+kind: "rotation_key"
+fact: "rotation"
+description: "Eligible key rotates automatically"
+severity: "MEDIUM"
+remediation: "Enable rotation on the eligible key."
+cis: "CIS AWS Foundations 3.0.0/3.6"

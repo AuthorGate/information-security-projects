@@ -1,0 +1,8 @@
+id: "S303"
+service: "s3"
+kind: "bucket"
+fact: "private_canary"
+description: "Examined bucket policy lacks an anonymous canary read grant"
+severity: "CRITICAL"
+remediation: "Remove the isolated public canary statement."
+cis: null

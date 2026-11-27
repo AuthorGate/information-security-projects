@@ -1,0 +1,8 @@
+id: "EC204"
+service: "ec2"
+kind: "instance"
+fact: "imds_safe"
+description: "Metadata disabled or IMDSv2 required"
+severity: "HIGH"
+remediation: "Require metadata tokens on the instance."
+cis: "CIS AWS Foundations 3.0.0/5.6"

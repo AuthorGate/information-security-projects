@@ -1,0 +1,8 @@
+id: "RDS01"
+service: "rds"
+kind: "database"
+fact: "encrypted"
+description: "Database storage encrypted"
+severity: "HIGH"
+remediation: "Migrate to encrypted storage."
+cis: "CIS AWS Foundations 3.0.0/2.3.1"

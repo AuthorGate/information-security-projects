@@ -1,0 +1,9 @@
+id: "T3"
+title: "Self policy-management authority"
+mitre_attack_id: "T1098.003"
+mapping_status: "unverified"
+kind: "decision"
+preconditions: ["self_management_permission"]
+effect: "can_modify_policy"
+proof: "check_self_management"
+fix: "identity"

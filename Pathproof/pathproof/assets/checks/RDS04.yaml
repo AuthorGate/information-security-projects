@@ -1,0 +1,8 @@
+id: "RDS04"
+service: "rds"
+kind: "database"
+fact: "backups"
+description: "Backup retention at least seven days"
+severity: "MEDIUM"
+remediation: "Set the backup retention to at least seven days."
+cis: null

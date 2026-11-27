@@ -1,0 +1,8 @@
+id: "IAM07"
+service: "iam"
+kind: "user"
+fact: "self_scoped"
+description: "Named user lacks self policy-management authority"
+severity: "HIGH"
+remediation: "Remove the offending self-management grant."
+cis: null

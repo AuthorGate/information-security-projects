@@ -1,0 +1,8 @@
+id: "IAM01"
+service: "iam"
+kind: "account"
+fact: "root_mfa"
+description: "Root uses MFA"
+severity: "HIGH"
+remediation: "Enable MFA for the root identity."
+cis: "CIS AWS Foundations 3.0.0/1.5"

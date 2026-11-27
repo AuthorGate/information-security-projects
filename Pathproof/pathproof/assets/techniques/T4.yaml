@@ -1,0 +1,9 @@
+id: "T4"
+title: "Instance metadata exposure hypothesis"
+mitre_attack_id: "T1552.005"
+mapping_status: "context"
+kind: "model"
+preconditions: ["public_ingress","optional_tokens","attached_role"]
+effect: "exposes_credentials"
+proof: "inspect_instance"
+fix: "tokens"
