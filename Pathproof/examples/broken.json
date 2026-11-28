@@ -1,0 +1,264 @@
+{
+  "captured_at": "2026-11-26T00:00:00+00:00",
+  "inventory": {
+    "coverage": [
+      {
+        "operation": "seed",
+        "scope": "classroom",
+        "service": "iam",
+        "state": "complete"
+      },
+      {
+        "operation": "seed",
+        "scope": "classroom",
+        "service": "s3",
+        "state": "complete"
+      },
+      {
+        "operation": "seed",
+        "scope": "classroom",
+        "service": "ec2",
+        "state": "complete"
+      },
+      {
+        "operation": "seed",
+        "scope": "classroom",
+        "service": "cloudtrail",
+        "state": "complete"
+      },
+      {
+        "operation": "seed",
+        "scope": "classroom",
+        "service": "kms",
+        "state": "complete"
+      },
+      {
+        "operation": "seed",
+        "scope": "classroom",
+        "service": "rds",
+        "state": "complete"
+      }
+    ],
+    "provider": "aws",
+    "regions": [
+      "us-east-1"
+    ],
+    "resources": [
+      {
+        "facts": {
+          "account_bpa": false,
+          "no_root_key": true,
+          "password_length": true,
+          "password_reuse": true,
+          "root_mfa": true
+        },
+        "id": "classroom",
+        "labels": {},
+        "region": "global",
+        "type": "account"
+      },
+      {
+        "facts": {
+          "console_mfa": true,
+          "identity": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Resource": "arn:aws:iam::111111111111:role/records",
+              "Sid": "TrustCandidate"
+            },
+            {
+              "Action": "iam:PutUserPolicy",
+              "Effect": "Allow",
+              "Resource": "arn:aws:iam::111111111111:user/student",
+              "Sid": "SelfManagement"
+            }
+          ],
+          "self_scoped": false
+        },
+        "id": "arn:aws:iam::111111111111:user/student",
+        "labels": {
+          "low_privilege": true
+        },
+        "region": "global",
+        "type": "user"
+      },
+      {
+        "facts": {
+          "console_mfa": true,
+          "self_scoped": true
+        },
+        "id": "arn:aws:iam::111111111111:user/analyst",
+        "labels": {},
+        "region": "global",
+        "type": "user"
+      },
+      {
+        "facts": {
+          "read_object": "arn:aws:s3:::pathproof-classroom/canary.txt",
+          "trust": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": "arn:aws:iam::111111111111:user/analyst"
+              },
+              "Sid": "KeepAnalyst"
+            },
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": "arn:aws:iam::111111111111:user/student"
+              },
+              "Sid": "UnexpectedStudent"
+            }
+          ],
+          "trust_scoped": false
+        },
+        "id": "arn:aws:iam::111111111111:role/records",
+        "labels": {},
+        "region": "global",
+        "type": "role"
+      },
+      {
+        "facts": {
+          "access_logging": true,
+          "bucket_bpa": false,
+          "policy": [
+            {
+              "Action": "s3:GetObject",
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": "arn:aws:iam::111111111111:user/analyst"
+              },
+              "Resource": "arn:aws:s3:::pathproof-classroom/canary.txt",
+              "Sid": "KeepAnalyst"
+            },
+            {
+              "Action": "s3:GetObject",
+              "Effect": "Allow",
+              "Principal": "*",
+              "Resource": "arn:aws:s3:::pathproof-classroom/canary.txt",
+              "Sid": "PublicCanary"
+            }
+          ],
+          "private_canary": false,
+          "versioning": true
+        },
+        "id": "arn:aws:s3:::pathproof-classroom",
+        "labels": {
+          "crown_jewel": true
+        },
+        "region": "global",
+        "type": "bucket"
+      },
+      {
+        "facts": {
+          "imds_safe": false,
+          "public_ingress": true,
+          "role_attachment": "arn:aws:iam::111111111111:role/records"
+        },
+        "id": "i-classroom",
+        "labels": {},
+        "region": "global",
+        "type": "instance"
+      },
+      {
+        "facts": {
+          "ipv4_admin": true,
+          "ipv6_admin": true
+        },
+        "id": "web-sg",
+        "labels": {},
+        "region": "global",
+        "type": "sg"
+      },
+      {
+        "facts": {
+          "empty": true
+        },
+        "id": "default-sg",
+        "labels": {},
+        "region": "global",
+        "type": "default_sg"
+      },
+      {
+        "facts": {
+          "ebs_default": true
+        },
+        "id": "ec2/us-east-1",
+        "labels": {},
+        "region": "global",
+        "type": "ec2_region"
+      },
+      {
+        "facts": {
+          "encrypted": true
+        },
+        "id": "vol-classroom",
+        "labels": {},
+        "region": "global",
+        "type": "volume"
+      },
+      {
+        "facts": {
+          "active_multi": false,
+          "logging": true,
+          "multi_mgmt": false
+        },
+        "id": "trails/us-east-1",
+        "labels": {},
+        "region": "global",
+        "type": "trail_scope"
+      },
+      {
+        "facts": {
+          "kms": true,
+          "validation": true
+        },
+        "id": "trail-classroom",
+        "labels": {},
+        "region": "global",
+        "type": "trail"
+      },
+      {
+        "facts": {
+          "enabled": true,
+          "no_deletion": true
+        },
+        "id": "key-classroom",
+        "labels": {},
+        "region": "global",
+        "type": "key"
+      },
+      {
+        "facts": {
+          "rotation": true
+        },
+        "id": "rotation/key-classroom",
+        "labels": {},
+        "region": "global",
+        "type": "rotation_key"
+      },
+      {
+        "facts": {
+          "backups": true,
+          "deletion_protection": true,
+          "encrypted": true,
+          "minor_upgrade": true,
+          "private": true
+        },
+        "id": "db-classroom",
+        "labels": {
+          "crown_jewel": true
+        },
+        "region": "global",
+        "type": "database"
+      }
+    ],
+    "source": "lab"
+  },
+  "schema_version": 2,
+  "snapshot_id": "3a8186cd31eae02bf2b3925619aa74293a126d2522c76ecb877c47bcd60bbf64"
+}

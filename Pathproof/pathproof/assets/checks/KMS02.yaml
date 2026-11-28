@@ -1,0 +1,8 @@
+id: "KMS02"
+service: "kms"
+kind: "key"
+fact: "enabled"
+description: "Assessed key enabled"
+severity: "MEDIUM"
+remediation: "Review dependencies and enable keys designated for use."
+cis: null

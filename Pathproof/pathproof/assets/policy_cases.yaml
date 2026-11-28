@@ -1,0 +1,23 @@
+target: arn:aws:s3:::pathproof-week1/canary.txt
+action: s3:GetObject
+cases:
+  - id: exact-allow
+    expected: ALLOW
+    statements:
+      - {Effect: Allow, Action: "s3:GetObject", Resource: "arn:aws:s3:::pathproof-week1/canary.txt"}
+  - id: explicit-deny-wins
+    expected: EXPLICIT_DENY
+    statements:
+      - {Effect: Allow, Action: "s3:GetObject", Resource: "*"}
+      - {Effect: Deny, Action: "s3:GetObject", Resource: "arn:aws:s3:::pathproof-week1/canary.txt"}
+  - id: wrong-object
+    expected: IMPLICIT_DENY
+    statements:
+      - {Effect: Allow, Action: "s3:GetObject", Resource: "arn:aws:s3:::pathproof-week1/other.txt"}
+  - id: condition-outside-subset
+    expected: UNKNOWN
+    statements:
+      - Effect: Allow
+        Action: "s3:GetObject"
+        Resource: "*"
+        Condition: {StringEquals: {"aws:PrincipalTag/team": classroom}}

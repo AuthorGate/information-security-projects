@@ -1,0 +1,8 @@
+id: "KMS03"
+service: "kms"
+kind: "key"
+fact: "no_deletion"
+description: "Assessed key has no pending deletion"
+severity: "HIGH"
+remediation: "Review the scheduled deletion and its consumers."
+cis: null

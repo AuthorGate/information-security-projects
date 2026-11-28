@@ -1,0 +1,8 @@
+id: "CT03"
+service: "cloudtrail"
+kind: "trail"
+fact: "validation"
+description: "Log integrity validation enabled"
+severity: "MEDIUM"
+remediation: "Enable trail log-file validation."
+cis: "CIS AWS Foundations 3.0.0/3.2"

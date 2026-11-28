@@ -1,0 +1,4 @@
+impact: 4
+ease: {T1: 5, T2: 3, T3: 2, T4: 1}
+covered: 1.0
+gap: 1.5

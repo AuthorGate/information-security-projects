@@ -1,0 +1,8 @@
+id: "IAM02"
+service: "iam"
+kind: "account"
+fact: "no_root_key"
+description: "Root has no access key"
+severity: "CRITICAL"
+remediation: "Remove any root access keys after reviewing dependencies."
+cis: "CIS AWS Foundations 3.0.0/1.4"

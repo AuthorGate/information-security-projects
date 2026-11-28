@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PathProof evidence report</title>
+<style>body{margin:2rem auto;max-width:1040px;padding:0 1rem;color:#19303a;background:#fcfcfa;font:16px/1.45 system-ui}h1,h2{color:#154d51}table{border-collapse:collapse;width:100%;font-size:.91rem}td,th{text-align:left;border-bottom:1px solid #c5d3d1;padding:.45rem;overflow-wrap:anywhere}summary{cursor:pointer;font-weight:600;margin:.5rem 0}code{overflow-wrap:anywhere}pre{white-space:pre-wrap;overflow-wrap:anywhere}section{margin:1.7rem 0}.net{height:320px;border:1px solid #c5d3d1}.FAIL,.BLOCKED{font-weight:bold;color:#873b2b}.PASS,.PROVEN{font-weight:bold;color:#156647}</style>
+<h1>PathProof evidence report</h1><p>Snapshot <code>{{report.snapshot_id}}</code></p>
+{% macro graph(g,id) %}<p>Graph engine: {{g.engine}} · Scope: {{g.scope}}</p>
+{% if script %}<div id="{{id}}" class="net"></div><script type="application/json" data-graph="{{id}}">{{g|tojson}}</script>{% else %}{{g|graph_svg}}{% endif %}
+<table><tr><th>Source</th><th>Relationship</th><th>Target</th><th>Evidence</th></tr>{% for e in g.edges %}<tr><td>{{e.source}}</td><td>{{e.relation}}</td><td>{{e.target}}</td><td>{{e.evidence}}</td></tr>{% else %}<tr><td colspan="4">No relationship established within the modeled scope.</td></tr>{% endfor %}</table>
+{% for p in g.pairs %}<details><summary>{{p.start}} → {{p.goal}} · {{p.paths|length}} modeled routes</summary>{% for route in p.paths %}<p>{{route.nodes|join(" → ")}} · score {{route.score_range|join(" to ")}}</p>{% else %}<p>No route established in this model.</p>{% endfor %}</details>{% endfor %}{% endmacro %}
+{% if report.proofs %}<section><h2>Proof of fix</h2>{% for p in report.proofs %}<details {{'open' if loop.first else ''}}><summary>{{p.scenario}} · {{p.outcome}}</summary>
+<p>Saved request <code>{{p.before.plan.plan_hash}}</code></p><table><tr><th>Measurement</th><th>Before</th><th>After</th></tr>
+<tr><td>Verdict or condition</td><td>{{p.before.verdict or p.before.state}}</td><td>{{p.after.verdict or p.after.state}}</td></tr>
+<tr><td>Blocking control</td><td>{{p.before.control or '—'}}</td><td>{{p.after.control or '—'}}</td></tr>
+{% for k,v in p.before.must_still_work.items() %}<tr><td>{{k}}</td><td>{{v}}</td><td>{{p.after.must_still_work[k]}}</td></tr>{% endfor %}</table>
+<details><summary>Request evidence and patch</summary><pre>{{p.before|tojson(indent=2)}}
+{{p.patch|tojson(indent=2)}}
+{{p.after|tojson(indent=2)}}</pre></details>
+<h3>Before</h3>{{graph(p.before_graph,'before-' ~ p.scenario)}}<h3>After</h3>{{graph(p.after_graph,'after-' ~ p.scenario)}}</details>{% endfor %}</section>{% endif %}
+<section><h2>Inventory graph</h2>{{graph(report.graph,'inventory')}}</section>
+<section><h2>Findings</h2><p>{{visible|length}} visible of {{report.findings|length}}. The JSON file retains all rows.</p><table><tr><th>Check</th><th>Status</th><th>Severity</th><th>Resource</th><th>Fact</th></tr>{% for r in visible %}<tr><td>{{r.check_id}}</td><td class="{{r.status}}">{{r.status}}</td><td>{{r.severity}}</td><td>{{r.resource}}</td><td>{{r.evidence}}</td></tr>{% endfor %}</table></section>
+<section><h2>CIS evidence within tested scope</h2><table><tr><th>Control</th><th>Subset result</th><th>Observations</th></tr>{% for c in report.compliance %}<tr><td>{{c.control}}</td><td>{{c.tested_subset}}</td><td>{{c.counts}}</td></tr>{% endfor %}</table></section>
+<section><h2>Collection coverage</h2><table><tr><th>Service</th><th>Scope</th><th>Operation</th><th>Outcome</th></tr>{% for r in report.coverage %}<tr><td>{{r.service}}</td><td>{{r.scope}}</td><td>{{r.operation}}</td><td>{{r.state}}</td></tr>{% endfor %}</table></section>
+{% if script %}<script>{{script|safe}}</script><script>
+for (const spec of document.querySelectorAll('[data-graph]')) {
+ const g=JSON.parse(spec.textContent);
+ const nodes=g.nodes.map(n=>({id:n.id,label:n.id.split('/').pop(),group:n.type}));
+ const edges=g.edges.map(e=>({from:e.source,to:e.target,label:e.relation,arrows:'to'}));
+ new vis.Network(document.getElementById(spec.dataset.graph),{nodes,edges},{layout:{randomSeed:11},physics:{enabled:false}});
+}
+</script>{% endif %}</html>

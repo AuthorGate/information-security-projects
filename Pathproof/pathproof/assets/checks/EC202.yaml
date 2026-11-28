@@ -1,0 +1,8 @@
+id: "EC202"
+service: "ec2"
+kind: "sg"
+fact: "ipv6_admin"
+description: "Group restricts IPv6 SSH and RDP ingress"
+severity: "HIGH"
+remediation: "Narrow the offending public IPv6 ingress rule."
+cis: "CIS AWS Foundations 3.0.0/5.3"

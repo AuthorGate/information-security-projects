@@ -1,0 +1,8 @@
+id: "CT04"
+service: "cloudtrail"
+kind: "trail"
+fact: "kms"
+description: "Trail uses a KMS key"
+severity: "MEDIUM"
+remediation: "Select the intended KMS key for trail encryption."
+cis: "CIS AWS Foundations 3.0.0/3.5"

@@ -1,0 +1,58 @@
+good:
+  iam:
+    get_account_summary: {"SummaryMap":{"AccountMFAEnabled":1,"AccountAccessKeysPresent":0}}
+    get_account_password_policy: {"PasswordPolicy":{"MinimumPasswordLength":14,"PasswordReusePrevention":24}}
+    list_users: {"Users":[{"Arn":"arn:aws:iam::111111111111:user/student","UserName":"student"}]}
+    get_login_profile: {"LoginProfile":{"UserName":"student"}}
+    list_mfa_devices: {"MFADevices":[{"SerialNumber":"fixture"}]}
+  s3:
+    list_buckets: {"Buckets":[{"Name":"pathproof-classroom"}]}
+    get_bucket_location: {"LocationConstraint":null}
+    get_public_access_block: {"PublicAccessBlockConfiguration":{"BlockPublicAcls":true,"IgnorePublicAcls":true,"BlockPublicPolicy":true,"RestrictPublicBuckets":true}}
+    get_bucket_versioning: {"Status":"Enabled"}
+    get_bucket_logging: {"LoggingEnabled":{"TargetBucket":"test-logs"}}
+    get_bucket_policy: {}
+  ec2:
+    describe_security_groups: {"SecurityGroups":[{"GroupId":"sg-a","GroupName":"default","IpPermissions":[],"IpPermissionsEgress":[]}]}
+    describe_instances: {"Reservations":[{"Instances":[{"InstanceId":"i-a","MetadataOptions":{"HttpEndpoint":"enabled","HttpTokens":"required"}}]}]}
+    get_ebs_encryption_by_default: {"EbsEncryptionByDefault":true}
+    describe_volumes: {"Volumes":[{"VolumeId":"vol-a","Encrypted":true}]}
+  cloudtrail:
+    describe_trails: {"trailList":[{"TrailARN":"fixture-trail","IsMultiRegionTrail":true,"LogFileValidationEnabled":true,"KmsKeyId":"fixture-key"}]}
+    get_trail_status: {"IsLogging":true}
+    get_event_selectors: {"EventSelectors":[{"IncludeManagementEvents":true,"ReadWriteType":"All"}]}
+  kms:
+    list_keys: {"Keys":[{"KeyId":"fixture-key","KeyArn":"fixture-key"}]}
+    describe_key: {"KeyMetadata":{"KeyManager":"CUSTOMER","KeySpec":"SYMMETRIC_DEFAULT","Origin":"AWS_KMS","Enabled":true,"KeyState":"Enabled"}}
+    get_key_rotation_status: {"KeyRotationEnabled":true}
+  rds:
+    describe_db_instances: {"DBInstances":[{"DBInstanceArn":"fixture-db","StorageEncrypted":true,"PubliclyAccessible":false,"AutoMinorVersionUpgrade":true,"BackupRetentionPeriod":7,"DeletionProtection":true}]}
+bad:
+  iam:
+    get_account_summary: {"SummaryMap":{"AccountMFAEnabled":0,"AccountAccessKeysPresent":1}}
+    get_account_password_policy: {"PasswordPolicy":{"MinimumPasswordLength":13,"PasswordReusePrevention":23}}
+    list_users: {"Users":[{"Arn":"arn:aws:iam::111111111111:user/student","UserName":"student"}]}
+    get_login_profile: {"LoginProfile":{"UserName":"student"}}
+    list_mfa_devices: {"MFADevices":[]}
+  s3:
+    list_buckets: {"Buckets":[{"Name":"pathproof-classroom"}]}
+    get_bucket_location: {"LocationConstraint":null}
+    get_public_access_block: {"PublicAccessBlockConfiguration":{"BlockPublicAcls":false,"IgnorePublicAcls":true,"BlockPublicPolicy":false,"RestrictPublicBuckets":true}}
+    get_bucket_versioning: {"Status":"Suspended"}
+    get_bucket_logging: {}
+    get_bucket_policy: {"Policy":{"Statement":{"Effect":"Allow","Principal":"*","Action":"s3:GetObject","Resource":"arn:aws:s3:::pathproof-classroom/canary.txt"}}}
+  ec2:
+    describe_security_groups: {"SecurityGroups":[{"GroupId":"sg-a","GroupName":"default","IpPermissions":[{"IpProtocol":"-1","IpRanges":[{"CidrIp":"0.0.0.0/0"}],"Ipv6Ranges":[{"CidrIpv6":"::/0"}]}],"IpPermissionsEgress":[]}]}
+    describe_instances: {"Reservations":[{"Instances":[{"InstanceId":"i-a","MetadataOptions":{"HttpEndpoint":"enabled","HttpTokens":"optional"}}]}]}
+    get_ebs_encryption_by_default: {"EbsEncryptionByDefault":false}
+    describe_volumes: {"Volumes":[{"VolumeId":"vol-a","Encrypted":false}]}
+  cloudtrail:
+    describe_trails: {"trailList":[{"TrailARN":"fixture-trail","IsMultiRegionTrail":false,"LogFileValidationEnabled":false}]}
+    get_trail_status: {"IsLogging":false}
+    get_event_selectors: {"EventSelectors":[{"IncludeManagementEvents":true,"ReadWriteType":"All"}]}
+  kms:
+    list_keys: {"Keys":[{"KeyId":"fixture-key","KeyArn":"fixture-key"}]}
+    describe_key: {"KeyMetadata":{"KeyManager":"CUSTOMER","KeySpec":"SYMMETRIC_DEFAULT","Origin":"AWS_KMS","Enabled":false,"KeyState":"PendingDeletion"}}
+    get_key_rotation_status: {"KeyRotationEnabled":false}
+  rds:
+    describe_db_instances: {"DBInstances":[{"DBInstanceArn":"fixture-db","StorageEncrypted":false,"PubliclyAccessible":true,"AutoMinorVersionUpgrade":false,"BackupRetentionPeriod":6,"DeletionProtection":false}]}

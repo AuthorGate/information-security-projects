@@ -1,0 +1,437 @@
+{
+  "captured_at": "2026-11-26T00:00:00+00:00",
+  "inventory": {
+    "coverage": [],
+    "provider": "aws",
+    "regions": [
+      "us-east-1"
+    ],
+    "resources": [
+      {
+        "facts": {
+          "account_bpa": true,
+          "no_root_key": true,
+          "password_length": true,
+          "password_reuse": true,
+          "root_mfa": true
+        },
+        "id": "good/account",
+        "labels": {},
+        "region": "global",
+        "type": "account"
+      },
+      {
+        "facts": {
+          "console_mfa": true,
+          "self_scoped": true
+        },
+        "id": "good/user",
+        "labels": {},
+        "region": "global",
+        "type": "user"
+      },
+      {
+        "facts": {
+          "access_logging": true,
+          "bucket_bpa": true,
+          "private_canary": true,
+          "versioning": true
+        },
+        "id": "good/bucket",
+        "labels": {
+          "crown_jewel": false
+        },
+        "region": "us-east-1",
+        "type": "bucket"
+      },
+      {
+        "facts": {
+          "ipv4_admin": true,
+          "ipv6_admin": true
+        },
+        "id": "good/sg",
+        "labels": {},
+        "region": "us-east-1",
+        "type": "sg"
+      },
+      {
+        "facts": {
+          "empty": true
+        },
+        "id": "good/default_sg",
+        "labels": {},
+        "region": "us-east-1",
+        "type": "default_sg"
+      },
+      {
+        "facts": {
+          "imds_safe": true,
+          "instance_profile_attached": false,
+          "public_ip_assigned": false
+        },
+        "id": "good/instance",
+        "labels": {},
+        "region": "us-east-1",
+        "type": "instance"
+      },
+      {
+        "facts": {
+          "ebs_default": true
+        },
+        "id": "good/ec2_region",
+        "labels": {},
+        "region": "us-east-1",
+        "type": "ec2_region"
+      },
+      {
+        "facts": {
+          "encrypted": true
+        },
+        "id": "good/volume",
+        "labels": {},
+        "region": "us-east-1",
+        "type": "volume"
+      },
+      {
+        "facts": {
+          "kms": true,
+          "validation": true
+        },
+        "id": "good/trail",
+        "labels": {},
+        "region": "us-east-1",
+        "type": "trail"
+      },
+      {
+        "facts": {
+          "active_multi": true,
+          "logging": true,
+          "multi_mgmt": true
+        },
+        "id": "good/trail_scope",
+        "labels": {},
+        "region": "us-east-1",
+        "type": "trail_scope"
+      },
+      {
+        "facts": {
+          "enabled": true,
+          "no_deletion": true
+        },
+        "id": "good/key",
+        "labels": {},
+        "region": "us-east-1",
+        "type": "key"
+      },
+      {
+        "facts": {
+          "rotation": true
+        },
+        "id": "good/rotation_key",
+        "labels": {},
+        "region": "us-east-1",
+        "type": "rotation_key"
+      },
+      {
+        "facts": {
+          "backups": true,
+          "deletion_protection": true,
+          "encrypted": true,
+          "minor_upgrade": true,
+          "private": true
+        },
+        "id": "good/database",
+        "labels": {},
+        "region": "us-east-1",
+        "type": "database"
+      },
+      {
+        "facts": {
+          "read_object": "arn:aws:s3:::pathproof-classroom/canary.txt",
+          "trust": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": "arn:aws:iam::111111111111:user/analyst"
+              },
+              "Sid": "KeepAnalyst"
+            }
+          ],
+          "trust_scoped": true
+        },
+        "id": "good/role",
+        "labels": {},
+        "region": "global",
+        "type": "role"
+      },
+      {
+        "facts": {
+          "account_bpa": false,
+          "no_root_key": false,
+          "password_length": false,
+          "password_reuse": false,
+          "root_mfa": false
+        },
+        "id": "bad/account",
+        "labels": {},
+        "region": "global",
+        "type": "account"
+      },
+      {
+        "facts": {
+          "console_mfa": false,
+          "self_scoped": false
+        },
+        "id": "bad/user",
+        "labels": {},
+        "region": "global",
+        "type": "user"
+      },
+      {
+        "facts": {
+          "access_logging": false,
+          "bucket_bpa": false,
+          "private_canary": false,
+          "versioning": false
+        },
+        "id": "bad/bucket",
+        "labels": {
+          "crown_jewel": false
+        },
+        "region": "us-east-1",
+        "type": "bucket"
+      },
+      {
+        "facts": {
+          "ipv4_admin": false,
+          "ipv6_admin": false
+        },
+        "id": "bad/sg",
+        "labels": {},
+        "region": "us-east-1",
+        "type": "sg"
+      },
+      {
+        "facts": {
+          "empty": false
+        },
+        "id": "bad/default_sg",
+        "labels": {},
+        "region": "us-east-1",
+        "type": "default_sg"
+      },
+      {
+        "facts": {
+          "imds_safe": false,
+          "instance_profile_attached": false,
+          "public_ip_assigned": false
+        },
+        "id": "bad/instance",
+        "labels": {},
+        "region": "us-east-1",
+        "type": "instance"
+      },
+      {
+        "facts": {
+          "ebs_default": false
+        },
+        "id": "bad/ec2_region",
+        "labels": {},
+        "region": "us-east-1",
+        "type": "ec2_region"
+      },
+      {
+        "facts": {
+          "encrypted": false
+        },
+        "id": "bad/volume",
+        "labels": {},
+        "region": "us-east-1",
+        "type": "volume"
+      },
+      {
+        "facts": {
+          "kms": false,
+          "validation": false
+        },
+        "id": "bad/trail",
+        "labels": {},
+        "region": "us-east-1",
+        "type": "trail"
+      },
+      {
+        "facts": {
+          "active_multi": false,
+          "logging": false,
+          "multi_mgmt": false
+        },
+        "id": "bad/trail_scope",
+        "labels": {},
+        "region": "us-east-1",
+        "type": "trail_scope"
+      },
+      {
+        "facts": {
+          "enabled": false,
+          "no_deletion": false
+        },
+        "id": "bad/key",
+        "labels": {},
+        "region": "us-east-1",
+        "type": "key"
+      },
+      {
+        "facts": {
+          "rotation": false
+        },
+        "id": "bad/rotation_key",
+        "labels": {},
+        "region": "us-east-1",
+        "type": "rotation_key"
+      },
+      {
+        "facts": {
+          "backups": false,
+          "deletion_protection": false,
+          "encrypted": false,
+          "minor_upgrade": false,
+          "private": false
+        },
+        "id": "bad/database",
+        "labels": {},
+        "region": "us-east-1",
+        "type": "database"
+      },
+      {
+        "facts": {
+          "read_object": "arn:aws:s3:::pathproof-classroom/canary.txt",
+          "trust": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": "arn:aws:iam::111111111111:user/analyst"
+              },
+              "Sid": "KeepAnalyst"
+            },
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": "arn:aws:iam::111111111111:user/student"
+              },
+              "Sid": "UnexpectedStudent"
+            }
+          ],
+          "trust_scoped": false
+        },
+        "id": "bad/role",
+        "labels": {},
+        "region": "global",
+        "type": "role"
+      },
+      {
+        "facts": {},
+        "id": "partial/account",
+        "labels": {},
+        "region": "global",
+        "type": "account"
+      },
+      {
+        "facts": {},
+        "id": "partial/bucket",
+        "labels": {},
+        "region": "global",
+        "type": "bucket"
+      },
+      {
+        "facts": {},
+        "id": "partial/database",
+        "labels": {},
+        "region": "global",
+        "type": "database"
+      },
+      {
+        "facts": {},
+        "id": "partial/default_sg",
+        "labels": {},
+        "region": "global",
+        "type": "default_sg"
+      },
+      {
+        "facts": {},
+        "id": "partial/ec2_region",
+        "labels": {},
+        "region": "global",
+        "type": "ec2_region"
+      },
+      {
+        "facts": {},
+        "id": "partial/instance",
+        "labels": {},
+        "region": "global",
+        "type": "instance"
+      },
+      {
+        "facts": {},
+        "id": "partial/key",
+        "labels": {},
+        "region": "global",
+        "type": "key"
+      },
+      {
+        "facts": {},
+        "id": "partial/role",
+        "labels": {},
+        "region": "global",
+        "type": "role"
+      },
+      {
+        "facts": {},
+        "id": "partial/rotation_key",
+        "labels": {},
+        "region": "global",
+        "type": "rotation_key"
+      },
+      {
+        "facts": {},
+        "id": "partial/sg",
+        "labels": {},
+        "region": "global",
+        "type": "sg"
+      },
+      {
+        "facts": {},
+        "id": "partial/trail",
+        "labels": {},
+        "region": "global",
+        "type": "trail"
+      },
+      {
+        "facts": {},
+        "id": "partial/trail_scope",
+        "labels": {},
+        "region": "global",
+        "type": "trail_scope"
+      },
+      {
+        "facts": {},
+        "id": "partial/user",
+        "labels": {},
+        "region": "global",
+        "type": "user"
+      },
+      {
+        "facts": {},
+        "id": "partial/volume",
+        "labels": {},
+        "region": "global",
+        "type": "volume"
+      }
+    ],
+    "source": "accuracy fixtures"
+  },
+  "schema_version": 2,
+  "snapshot_id": "6bd4bc36bb217e8f5d13d70e09b916024ae07c4594f187a8a0d485214fb2599d"
+}

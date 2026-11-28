@@ -1,0 +1,9 @@
+id: "T1"
+title: "Public canary"
+mitre_attack_id: "T1530"
+mapping_status: "context"
+kind: "access"
+preconditions: ["registered_canary","anonymous_grant"]
+effect: "can_read"
+proof: "read_registered_canary"
+fix: "bucket_statements"

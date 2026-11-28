@@ -1,0 +1,8 @@
+id: "CT02"
+service: "cloudtrail"
+kind: "trail_scope"
+fact: "multi_mgmt"
+description: "Active multi-region management read/write trail"
+severity: "HIGH"
+remediation: "Configure an active multi-region trail with management read and write events."
+cis: "CIS AWS Foundations 3.0.0/3.1"

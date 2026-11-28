@@ -1,0 +1,4 @@
+rules:
+  - check_id: S302
+    resource: arn:aws:s3:::pathproof-classroom
+    reason: Bucket-level controls intentionally disabled in the owned teaching fixture.

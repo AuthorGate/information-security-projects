@@ -1,0 +1,8 @@
+id: "IAM05"
+service: "iam"
+kind: "account"
+fact: "password_reuse"
+description: "Password history covers at least 24 passwords"
+severity: "MEDIUM"
+remediation: "Set password reuse prevention to 24."
+cis: "CIS AWS Foundations 3.0.0/1.9"
